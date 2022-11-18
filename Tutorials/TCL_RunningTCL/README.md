@@ -3,6 +3,7 @@
 Vivado uses a language called *tcl*. Suppose you want to run a long set of commands over and over again, such as describing all the ports in a Red Pitaya. You can combine them all into a tcl script, which you run at the beginning of your project.
 
 To execute tcl scripts, use the *Tcl Console* at the bottom of the screen:
+
 ![tcl console](tcl_console.png)
 
 First you need to navigate in the console to the directory containing the script.
