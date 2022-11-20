@@ -86,23 +86,56 @@ Use the Search box to find a *Binary Counter*, which you can select by double cl
 
 ![Search box with binar typed in](img_BinaryCounterSearch.png)
 
-This should add a Binary Counter block to your design:
+This should add a *Binary Counter* block to your design:
 
 ![Binary counter block in Vivado](img_BinaryCounterBlock.png)
 
 This has one input and one output:
 
 * On the left, *CLK* signifies that this takes a clock signal.
-* On the right it outputs a vector *Q* with sixteen bits, indexed from 15 to 0. It is typical for the 0th index to refer to the right-most component of the vector, rather than the left-most as in programming languages such as Python. To see why, look back at the binary counter. The right-most bit refers to the $2^0$ component, the next right-most to the $2^1$, and so on. So by indexing vectors from the right, the vector element $k$ represents the $2^k$ component.
+* On the right the counter outputs a vector *Q* with sixteen bits, indexed from 15 to 0. It is typical for the 0th index to refer to the right-most component of the vector, rather than the left-most as in programming languages such as Python. To see why, look back at the binary counter. The right-most bit refers to the $2^0$ component, the next right-most to the $2^1$, and so on. So by indexing vectors from the right, the vector element $k$ represents the $2^k$ component.
 
-The *FCLK_CLK0* on the ZYNQ7 processing system produces a signal oscillating at 125MHz, or $1.25\times 10^{8}$ times per second. Suppose we want to slow this down to two cycles per second. How many bits do we need in our counter?
+## 2. Customise the Counter
+
+The *FCLK_CLK0* on the ZYNQ7 processing system produces a signal oscillating at 125MHz, or $1.25\times 10^{8}$ times per second. Suppose we want to slow this down to 2 cycles per second. How many bits do we need in our counter?
 
 $$\frac{1.25\times 10^8}{2^k}=\frac{1}{2},$$
 
 $$\log(2^k)=\log(1.25\times 10^8)-\log(1/2),$$
 
-$$k=\frac{\log(1.25\times 10^8)-\log(1/2)}{\log 2}=27.9.$$
+$$k=\frac{\log(1.25\times 10^8)-\log(1/2)}{\log 2}\approx 27.9.$$
 
-Our binary counter thus needs to be around 28 bits long.
+Thus our binary counter needs to be around 28 bits long.
 
-## 2. Slice the output
+Looking through the output ports in the Verilog design, we can see the one for the LEDs:
+
+![Output port led_o indexed from 7 to 0](img_LEDOutputPort.png)
+
+Since this is indexed from 7 to 0, it takes eight bits, representing eight LEDs. If you look closely at the LEDs on the Pitaya you can see that they are indeed numbered. There are more than eight LEDs, the extra ones are used by the Pitaya's internal software.
+
+Since *led_0* needs eight bits, and we need a counter with about 28 elements, let's make a Binary Counter with 32 bits, and then feed the eight left-most bits to the LEDs. 
+
+To change the properties of the Binary Counter, either double click it, or *Right Click->Customize Block*. Change the *Output Width* to 32:
+
+![Customize Block window with Output Width selected](img_BinaryCounterOutput.png)
+
+After clicking *OK*, you should see this change reflected in the block:
+
+![The Binary Counter block, now with Q 31 0 as the output](img_BinaryCounter32.png)
+
+## 3. Slice the output
+
+Add another IP, this time choosing *Slice*:
+
+![A Slice block with input Din 31 0 and output Dout 0  0 ](img_SliceBlock.png)
+
+Customise this block so that it takes an input vector of size 32, and then slices the bits from 31 to 24:
+
+![Customise window, Din Width 31 DinFrom 31 Din Down To 24](img_SliceCustomisation.png)
+
+If you have the indices correct, *Dout Width* should automatically change to 8, representing an output size of 8 bits. After clicking *OK* you should see the changes reflected in the block:
+
+![Slice blick now Din 31 0 and Dout 7 0](img_SliceBlockCustomised.png)
+
+## 4. Connect everything together
+
