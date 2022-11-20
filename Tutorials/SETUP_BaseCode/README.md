@@ -43,7 +43,7 @@ We need to give Vivado a list of the input/output ports on the Pitaya, tell it a
 
 See [the tutorial on running Tcl scripts](/Tutorials/TCL_RunningTCL/README.md) for more details. After doing this the basic setup should appear in the *Diagram* window:
 
-![Basic Red Pitaya setup](img_BaseSetup_preXML.png)
+![Basic Red Pitaya setup](img_BaseSetup_PreXML.png)
 
 Let's run through what the these components are:
 
