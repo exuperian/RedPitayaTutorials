@@ -63,7 +63,7 @@ Suppose the binary counter ticks forward at a rate of one number per second.
 * The third digit from the right will be $(1/2^2)\mathrm{Hz}$, 
 * and the fourth will be $(1/2^3)\mathrm{Hz}$.
 
-So if a binary counter is ticking forward at some rate $r\mathrm{Hz}$, the $n$th digit from the right will oscillate between 0 and 1 at a rate of $(r/2^{n-1})\mathrm{Hz}$. **So to slow down a clock signal by $2^n$, we can use it to drive an $n+1$-bit binary counter, and then take the leftmost digit.**
+So if a binary counter is ticking forward at some rate $r\mathrm{Hz}$, the $n$ th digit from the right will oscillate between 0 and 1 at a rate of $(r/2^{n-1})\mathrm{Hz}$. **So to slow down a clock signal by $2^n$, we can use it to drive an $n+1$-bit binary counter, and then take the leftmost digit.**
 
 # Procedure
 
