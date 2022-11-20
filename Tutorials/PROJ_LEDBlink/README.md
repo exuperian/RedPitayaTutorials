@@ -63,11 +63,13 @@ Suppose the binary counter ticks forward at a rate of one number per second.
 * The third digit from the right will be $(1/2^2)\mathrm{Hz}$, 
 * and the fourth will be $(1/2^3)\mathrm{Hz}$.
 
-So if a binary counter is ticking forward at some rate $r\mathrm{Hz}$, the $n$ th digit from the right will oscillate between 0 and 1 at a rate of $(r/2^{n-1})\mathrm{Hz}$. **So to slow down a clock signal by $2^n$, we can use it to drive an $n+1$-bit binary counter, and then take the leftmost digit.**
+So if a binary counter is ticking forward at some rate $r\mathrm{Hz}$, the $n$ th digit from the right will oscillate between 0 and 1 at a rate of $(r/2^{n-1})\mathrm{Hz}$. 
+
+**So to slow down a clock signal by $2^n$, we can use it to drive an $n+1$-bit binary counter, and then take the left-most digit.**
 
 # Procedure
 
-The *FCLK_CLK0* output on the *ZYNQ7* provides a binary signal which oscillates between 0 and 1 at a rate of 125MHz. We will design a circuit that feed the clock to a binary counter, the leftmost digits of which are used to switch the LEDs on and off.
+The *FCLK_CLK0* output on the *ZYNQ7* provides a binary signal which oscillates between 0 and 1 at a rate of 125MHz. We will feed the clock to a binary counter, take the leftmost digits, and use these to switch the LEDs on and off.
 
 To start with, follow our [Base Vivado design tutorial](/Tutorials/SETUP_BaseCode/README.md) for the initial setup.
 
