@@ -1,6 +1,8 @@
-# Blinking LED
+# LED Binary counter
 
-The Red Pitaya has a series of LEDs on the side, which you can use to signal basic information. A good first project is to make these flash.
+The Red Pitaya has a series of LEDs on the side, which you can use to signal basic information. A good first project is to make these flash. In this tutorial we'll see how to turn them into a simple binary counter. This is based on [Anton Potočnick's LED Blinker tutorial](http://antonpotocnik.com/?p=487360).
+
+The blocks in Vivado represent basic elements which communicate with each other in binary. Thus programming an FPGA requires a basic understanding of how binary works. You don't need to know how to program in 1s and 0s, since Vivado already has premade blocks that do the processing for you. You just need to manage how these talk to each other, and communicate with the ports. We'll introduce the required bits of binary as we go.
 
 ![LED Location on device](img_LEDLocation.png)
 
@@ -9,8 +11,6 @@ The Red Pitaya has a series of LEDs on the side, which you can use to signal bas
 ## Preliminaries
 
 ### Clock signals
-
-The blocks in Vivado represent basic elements which communicate with each other in binary. So if you want to program the FPGA, you need a basic understanding of how binary works. You don't need to know how to program in 1s and 0s, since Vivado already has premade blocks that do the processing for you. You just need to manage how these talk to each other, and communicate with the ports.
 
 Most digital circuits need a clock signal, which oscillates between 0 and 1 at a predetermined rate. This is a useful resource if you want to, for example, make some LED lights blink. It is also important for synchronisation. The diagram in Vivado represents a physical circuit, and it will take electric signals different amounts of time to travel through the various connections. Circuit elements can wait one clock cycle in between processing, giving the signals time to catch up.
 
@@ -76,6 +76,33 @@ To start with, follow our [Base Vivado design tutorial](/Tutorials/SETUP_BaseCod
 
 ## 1. Add a binary counter
 
-The *FCLK_CLK0* on the ZYNQ7 processing system produces a signal oscillating at 125MHz, or $1.25\times 10^{8}$ times per second. 
+To add a pre-made binary clock, press the plus-shaped button to *Add IP*:
+
+![Plus-shaped button to add IP](img_AddIPButton.png)
+
+Alternatively you can *Right-click -> Add IP*, or press *Ctrl + I*. 
+
+Use the Search box to find a *Binary Counter*, which you can select by double clicking, or pressing the Enter key.
+
+![Search box with binar typed in](img_BinaryCounterSearch.png)
+
+This should add a Binary Counter block to your design:
+
+![Binary counter block in Vivado](img_BinaryCounterBlock.png)
+
+This has one input and one output:
+
+* On the left, *CLK* signifies that this takes a clock signal.
+* On the right it outputs a vector *Q* with sixteen bits, indexed from 15 to 0. It is typical for the 0th index to refer to the right-most component of the vector, rather than the left-most as in programming languages such as Python. To see why, look back at the binary counter. The right-most bit refers to the $2^0$ component, the next right-most to the $2^1$, and so on. So by indexing vectors from the right, the vector element $k$ represents the $2^k$ component.
+
+The *FCLK_CLK0* on the ZYNQ7 processing system produces a signal oscillating at 125MHz, or $1.25\times 10^{8}$ times per second. Suppose we want to slow this down to two cycles per second. How many bits do we need in our counter?
+
+$$\frac{1.25\times 10^8}{2^k}=\frac{1}{2},$$
+
+$$\log(2^k)=\log(1.25\times 10^8)-\log(1/2),$$
+
+$$k=\frac{\log(1.25\times 10^8)-\log(1/2)}{\log 2}=27.9.$$
+
+Our binary counter thus needs to be around 28 bits long.
 
 ## 2. Slice the output
