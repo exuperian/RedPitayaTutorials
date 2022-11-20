@@ -1,0 +1,5 @@
+# Blinking LED
+
+The Red Pitaya has a series of LEDs on the side, which you can use to signal basic information. A good first project is to make these flash.
+
+dd
