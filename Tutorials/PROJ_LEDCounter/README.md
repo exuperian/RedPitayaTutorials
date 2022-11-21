@@ -153,4 +153,4 @@ Be careful, *Undo* seems to have trouble moving things back to how they were, so
 
 # What's next?
 
-You now have a design that should make the LEDs blink as a binary counter! Next check out our tutorial on compiling code and running it on the Red Pitaya.
+You now have a design that should make the LEDs blink as a binary counter! Next check out our tutorial on [compiling and running code](/Tutorials/SETUP_Compiling) it on the Red Pitaya.

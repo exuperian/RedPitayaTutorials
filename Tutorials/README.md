@@ -4,7 +4,7 @@ Here are the tutorials we've made
 
 
 ## Getting started
-To begin with, see [Base setup](/Tutorials/SETUP_BaseCode) for how to build the base Vivado design for the Red Pitaya. A good first project is the [LED binary counter](/Tutorials/PROJ_LEDCounter), and then see our [tutorial on compiling](/Tutorials/SETUP_Compiling) for how to compile and run this on the device.
+To begin with, see [Base setup](/Tutorials/SETUP_BaseCode) for how to build the base Vivado design for the Red Pitaya. A good first project is the [LED binary counter](/Tutorials/PROJ_LEDCounter), and then see our [tutorial on compiling](/Tutorials/SETUP_Compiling) for how to deploy this to the Pitya.
 
 ## Full list of tutorials
 

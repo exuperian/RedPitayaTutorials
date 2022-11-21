@@ -8,6 +8,8 @@ Begin by making a design in Vivado, such as our [LED Binary Counter](/Tutorials/
 
 ## 1. Generate output products & wrapper
 
+We need to give the compiler some information about turning our block design into bits. Note that you will only have to do this step once. If you change your design and want to recompile, Verilog will automatically manage this step.
+
 We first need to convert our block design into something that can be compiled into bits. Under *Design Sources*, right-click your *Board Design* and select *Generate Output Products*:
 
 ![Right clicking the design](img_GenerateOutputProducts.png)
@@ -23,8 +25,6 @@ Now right-click again and choose *Generate HDL Wrapper*:
 You should now have a new wrapper file ending in `.v`. Your constraints file contained information on how the ports in the block diagram corresponded to the physical pins on the Red Pitaya. This new file converts this information into a format the compiler can understand.
 
 ![Design source has been replaced by blue file ending in .v](img_DesignWrapper.png)
-
-**If you modify the design you don't have to repeat these steps, since Vivado will update the wrapper automatically.**
 
 ## 2. Generate Bitstream
 
@@ -64,12 +64,12 @@ Now move to the `~` directory:
 
 If you run `ls`, you should see your `.bit` file there. To make the Pitaya run your compiled code, run
 
-```cat zynq_led_wrapper.bit > /cev/xdevcfg```
+```cat zynq_led_wrapper.bit > /dev/xdevcfg```
 
 where again the name of your `.bit` file may differ. This will make the Pitaya execute your design! You haven't done anything permanent though, and restarting the device will send it back to normal operation.
 
 # What next?
 
-You now know how to compile and run FPGA code for the Red Pitaya!
+You now know how to compile and run FPGA code for the Red Pitaya! Check out some of our projects.
 
-You will generally want to tinker with your design, and then re-compile. The HDL wrapper will automatically update, so all you need to do is click *Generate Bitstream*.
+If you tinker with your project and re-compile, you don't have to worry about step 1.. The HDL wrapper will automatically update, so all you need to do is generate the bitstream.
