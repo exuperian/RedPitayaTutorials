@@ -10,8 +10,8 @@ To begin with, see [Base setup](/Tutorials/SETUP_BaseCode/README.md) for how to 
 
 The basic code
 
-- [Basic setup](/Tutorials/SETUP_BaseCode/README.md)
-- [Compiling and running code on the Pitaya](/Tutorials/SETUP_Compiling/README.md)
+- [Basic setup](/Tutorials/SETUP_BaseCode/)
+- [Compiling and running code on the Pitaya](/Tutorials/SETUP_Compiling)
 
 Additional information
 
