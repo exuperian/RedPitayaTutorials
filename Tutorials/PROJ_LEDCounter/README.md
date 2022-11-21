@@ -139,3 +139,18 @@ If you have the indices correct, *Dout Width* should automatically change to 8, 
 
 ## 4. Connect everything together
 
+Click and drag to make wires connecting *FCLK_CLK0* → *Binary Counter* → *Slice* → *led_0[7:0]*. This should leave you with something like this:
+
+![Full block design with everything connected](img_ConnectedDesign.png)
+
+You can try and tidy things up a bit, but it's difficult to make Vivado look the way you want.
+
+* Clicking on a block, then pressing *Ctrl+R*, will rotate it.
+* You can use the arrow keys to move blocks up and down.
+* But dragging blocks sideways can rearrange your setup in unexpected ways.
+
+Be careful, *Undo* seems to have trouble moving things back to how they were, so it's easy to end up with a messed-up design.
+
+# What's next?
+
+You now have a design that should make the LEDs blink as a binary counter! Next check out our tutorial on compiling code and running it on the Red Pitaya.
