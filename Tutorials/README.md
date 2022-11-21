@@ -4,6 +4,19 @@ Here are the tutorials we've made
 
 
 ## Getting started
-* [Running Tcl scripts](/Tutorials/TCL_RunningTCL/README.md)
-* [Base Setup Code](/Tutorials/SETUP_BaseCode/README.md)
-* [LED Binary Counter](/Tutorials/PROJ_LEDCounter/README.md)
+To begin with, see [Base setup](/Tutorials/SETUP_BaseCode/README.md) for how to build the base Vivado design for the Red Pitaya. A good first project is the [LED binary counter](/Tutorials/PROJ_LEDCounter/README.md), and then see our [tutorial on compiling](/Tutorials/SETUP_Compiling/README.md) for how to compile and run this on the device.
+
+## Full list of tutorials
+
+The basic code
+
+- [Basic setup](/Tutorials/SETUP_BaseCode/README.md)
+- [Compiling and running code on the Pitaya](/Tutorials/SETUP_Compiling/README.md)
+
+Additional information
+
+- [Running Tcl scripts](/Tutorials/TCL_RunningTCL/README.md)
+
+Projects
+
+* [LED binary counter](/Tutorials/PROJ_LEDCounter/README.md)
