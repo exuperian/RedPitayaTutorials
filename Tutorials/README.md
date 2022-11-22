@@ -1,22 +1,27 @@
 # Tutorials
 
-Here are the tutorials we've made
+Here are the tutorials we have written so far on FPGA programming with the Red Pitaya. If you are just getting started, we recommend:
 
-
-## Getting started
-To begin with, see [Base setup](/Tutorials/SETUP_BaseCode) for how to build the base Vivado design for the Red Pitaya. A good first project is the [LED binary counter](/Tutorials/PROJ_LEDCounter), and then see our [tutorial on compiling](/Tutorials/SETUP_Compiling) for how to deploy this to the Pitya.
+1. [Setting up a Red Pitaya](/Tutorials/SETUP_Connecting)
+2. [Base Vivado design](/Tutorials/SETUP_BaseCode)
+3. [LED binary counter](/Tutorials/PROJ_LEDCounter)
+4. [Compiling and running code on the Pitaya](/Tutorials/SETUP_Compiling)
 
 ## Full list of tutorials
 
-The basic code
+### Red Pitaya Basics
 
-- [Basic setup](/Tutorials/SETUP_BaseCode)
+* [Setting up a Red Pitaya](/Tutorials/SETUP_Connecting)
+
+### Vivado
+
+- [Base Vivado design](/Tutorials/SETUP_BaseCode)
 - [Compiling and running code on the Pitaya](/Tutorials/SETUP_Compiling)
 
-Additional information
-
-- [Running Tcl scripts](/Tutorials/TCL_RunningTCL)
-
-Projects
+### Projects
 
 * [LED binary counter](/Tutorials/PROJ_LEDCounter)
+
+### Additional information
+
+- [Running Tcl scripts](/Tutorials/TCL_RunningTCL)

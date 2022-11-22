@@ -1,4 +1,4 @@
-# Setting up and connecting to a Red Pitaya
+# Setting up a Red Pitaya
 
 In this post we'll go through how to set up a Red Pitaya, and communicate it via your computer.
 
