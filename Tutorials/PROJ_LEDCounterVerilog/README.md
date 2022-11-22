@@ -1,4 +1,4 @@
-# LED Binary counter in Verilog
+# LED Binary counter with Verilog
 
 In the [LED binary counter](/Tutorials/PROJ_LEDCounter) tutorial, we made our design by dragging and dropping pre-made blocks in Vivado. Often we will want to create our own blocks, which is done by writing code in *Verilog*. In this tutorial we'll use Verilog to implement the binary counter.
 

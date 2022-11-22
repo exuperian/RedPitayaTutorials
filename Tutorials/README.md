@@ -21,6 +21,7 @@ Here are the tutorials we have written so far on FPGA programming with the Red P
 ### Projects
 
 * [LED binary counter](/Tutorials/PROJ_LEDCounter)
+* [LED binary counter with Verilog](/Tutorials/PROJ_LEDCounterVerilog)
 
 ### Additional information
 
