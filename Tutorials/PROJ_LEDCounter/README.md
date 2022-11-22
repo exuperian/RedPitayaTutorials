@@ -1,8 +1,8 @@
 # LED Binary counter
 
-The Red Pitaya has a series of LEDs on the side, which you can use to signal basic information. A good first project is to make these flash. In this tutorial we'll see how to turn them into a simple binary counter. This is based on [Anton Potočnick's LED Blinker tutorial](http://antonpotocnik.com/?p=487360).
+The Red Pitaya has a series of LEDs on the side, which you can use to signal basic information. In this tutorial we'll see how to turn them into a simple binary counter. This is based on [Anton Potočnick's LED Blinker tutorial](http://antonpotocnik.com/?p=487360).
 
-The blocks in Vivado represent basic elements which communicate with each other in binary. Thus programming an FPGA requires a basic understanding of how binary works. You don't need to know how to program in 1s and 0s, since Vivado already has premade blocks that do the processing for you. You just need to manage how these talk to each other, and communicate with the ports. We'll introduce the required bits of binary as we go.
+The blocks in Vivado represent basic elements which communicate with each other in binary. Programming an FPGA therefore requires a basic understanding of how binary works. You don't need to know how to program in 1s and 0s, since Vivado already has premade blocks that do the processing for you. You just need to manage how these talk to each other, and communicate with the ports. We'll introduce the required bits of binary as we go.
 
 ![LED Location on device](img_LEDLocation.png)
 
@@ -12,21 +12,21 @@ The blocks in Vivado represent basic elements which communicate with each other 
 
 ### Clock signals
 
-Most digital circuits need a clock signal, which oscillates between 0 and 1 at a predetermined rate. This is a useful resource if you want to, for example, make some LED lights blink. It is also important for synchronisation. The diagram in Vivado represents a physical circuit, and it will take electric signals different amounts of time to travel through the various connections. Circuit elements can wait one clock cycle in between processing, giving the signals time to catch up.
+Most digital circuits need a clock signal, which oscillates between 0 and 1 at a predetermined rate. This is a useful resource if you want to, for example, make some LED lights blink. It is also important for synchronisation. The diagram in Vivado represents a physical circuit the FPGA will replicate, and it will take electric signals different amounts of time to travel through the various connections. Circuit elements can wait one clock cycle in between processing, giving the signals time to catch up.
 
 ### Binary counters
 
 The clock signal is too fast to drive the LEDs directly, so we have to slow it down. The simplest way to do this is with a *binary counter*. Lots of great expositions come up if you search "How to count in Binary", so we'll just give a brief overview here. 
 
-Our regular number system is base ten. This means that we have ten digits which we count with:
+Our regular number system is base ten. This means that we have ten digits that we count with:
 
 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
 
-This lets us count from zero to nine. To count beyond this, we add an extra digit and repeat the process:
+This lets us count from zero to nine. To go beyond this, we add an extra digit and repeat the process:
 
 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
 
-When we run out of digits, we increment the first digit from 1 to 2. Eventually we'll reach 99. At this point we add a third digit:
+When we run out of digits, we increment the first digit from 1 to 2. Eventually we'll reach 99, at which point we add a third digit:
 
 98, 99, 100, 101, 102
 
@@ -36,25 +36,19 @@ The *binary* system is base two. This means we have two digits which we count wi
 
 0, 1
 
-This lets us count from zero to one. To count beyond this, we add an extra digit and repeat the process:
+This lets us count from zero to one. To go beyond this we add an extra digit and repeat the process:
 
 10, 11
 
 Since we only have two digits to play with, at this step we have to add a third digit. The process then continues.
 
-Let's look at how you count in Binary from zero to eight:
-
-```0, 1, 2 , 3 , 4  , 5  , 6  , 7  , 8```
-
-```0, 1, 10, 11, 100, 101, 110, 111, 1000```
-
-The numbers are the same if we add leading zeros:
+Let's look at how you count in Binary from zero to eight, adding some leading zeros to make our numbers four digits long:
 
 ```0000, 0001, 0002, 0003, 0004, 0005, 0006, 0007, 0008```
 
 ```0000, 0001, 0010, 0011, 0100, 0101, 0110, 0111, 1000```
 
-The last row of four 0/1 digits is a *four-bit binary counter*. We could imagine them as four LEDs which are on/off to represent the digits 0/1. 
+The bottom row of four 0/1 digits is a *four-bit binary counter*. We could imagine them as four LEDs which are on/off to represent the digits 0/1. 
 
 Suppose the binary counter ticks forward at a rate of one number per second.
 
@@ -69,14 +63,16 @@ So if a binary counter is ticking forward at some rate $r\mathrm{Hz}$, the $n$ t
 
 # Procedure
 
-The *FCLK_CLK0* output on the *ZYNQ7* provides a binary signal which oscillates between 0 and 1 at a rate of 125MHz. We will feed the clock to a binary counter, take the leftmost digits, and use these to switch the LEDs on and off.
+The *FCLK_CLK0* output on the *ZYNQ7* provides a binary signal which oscillates between 0 and 1 at a rate of 125MHz. We will feed the clock to a binary counter, take the leftmost digits, and use them to switch the LEDs on and off.
 
-To start with, follow our [Base Vivado design tutorial](/Tutorials/SETUP_BaseCode/README.md) for the initial setup.
+## 0. Base setup
+
+First follow our [Base Vivado design tutorial](/Tutorials/SETUP_BaseCode/README.md) for the initial setup.
 
 
 ## 1. Add a binary counter
 
-To add a pre-made binary clock, press the plus-shaped button to *Add IP*:
+For the most part we don't want to program in binary. Fortunately, Vivado has a vast array of pre-made blocks called *IP*s. To add one, press the plus-shaped button:
 
 ![Plus-shaped button to add IP](img_AddIPButton.png)
 
@@ -86,7 +82,7 @@ Use the Search box to find a *Binary Counter*, which you can select by double cl
 
 ![Search box with binar typed in](img_BinaryCounterSearch.png)
 
-This should add a *Binary Counter* block to your design:
+This should create a *Binary Counter* block in your design:
 
 ![Binary counter block in Vivado](img_BinaryCounterBlock.png)
 
@@ -153,4 +149,4 @@ Be careful, *Undo* seems to have trouble moving things back to how they were, so
 
 # What's next?
 
-You now have a design that should make the LEDs blink as a binary counter! Next check out our tutorial on [compiling and running code](/Tutorials/SETUP_Compiling) it on the Red Pitaya.
+You now have a design that should make the LEDs blink as a binary counter! Next check out our tutorial on [compiling and running code](/Tutorials/SETUP_Compiling) to deploy it on the Red Pitaya.
