@@ -62,4 +62,5 @@ Finally we need to tell Vivado some information called the *constraints*. These 
 
 # What next?
 
-You now have a Red Pitaya set up in Vivado! The next step is to play around with it. See our [LED binary counter](/Tutorials/PROJ_LEDBlink) for a good first step.
+You now have a Red Pitaya set up in Vivado! The next step is to play around with it. See our [LED binary counter](/Tutorials/PROJ_LEDCounter) for a good first step.
+
