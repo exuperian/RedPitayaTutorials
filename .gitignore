@@ -1,0 +1,10 @@
+#From https://github.com/github/gitignore/blob/main/Global/Vim.gitignore
+# Temporary
+*~
+# Auto-generated tag files
+tags
+# Persistent undo
+[._]*.un~
+
+*.swp
+*.swp

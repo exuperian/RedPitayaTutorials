@@ -1,0 +1,13 @@
+# Further reading
+
+Here are some references if you want to learn more about FPGA programming.
+
+## FPGA Programming
+
+An excellent introduction to the basics is [Introduction to Logic Circuits & Logic Design with Verilog](https://www.amazon.com/Introduction-Logic-Circuits-Design-Verilog-dp-3030136043/dp/3030136043/ref=dp_ob_title_bk), by Brock LaMeres. This covers the required knowledge of binary, basic circuit elements, and how these can be used to do computation.
+
+The website [HDLBits](https://hdlbits.01xz.net/wiki/Main_Page) has lots of example problems to work through. It also has an online simulator, so you can easily check if your answers are correct.
+
+## Vivado
+
+* [An overview of what constraints are](https://support.xilinx.com/s/article/564948?language=en_US).
