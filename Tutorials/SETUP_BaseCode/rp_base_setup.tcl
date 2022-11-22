@@ -1,6 +1,7 @@
-#Code from Anton, combined and slightly modified
-#
-# Create the input and output ports
+#Code to set up and configure a Red Pitaya in Vivado.
+#Original code by Anton Potocnik https://github.com/apotocnik/redpitaya_guide
+#Code has been combined and slightly modified by Ruvi Lecamwasam & Alex Hodges for https://github.com/exuperian/RedPitayaTutorials
+
 startgroup
 
 ### ADC
