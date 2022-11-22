@@ -1,7 +1,15 @@
-# RedPitayaGuide
+# Red Pitaya Tutorials
 
 Alex Hodges & Ruvi Lecamwasam
 
-Get started with [Tutorials](/Tutorials/README.md)
+The Red Pitaya is a very powerful and versatile device. It combines both a CPU and FPGA, together with fast analog to digital converters, making it great for doing feedback and control. There is however a steep learning curve to programing the FPGA. We've written some tutorials to ease this process, which we hope can take you from zero FPGA background to implementing basic feedback.
 
-Bad design can break your device. We tried our best to make everything correct, but don't take responsibility for anything of yours that breaks.
+Check out our [Tutorials](/Tutorials/README.md), or links for [Further reading](/References).
+
+If you have any comments or suggestions, you can reach us at:
+
+[alexander.hodges@oist.jp](mailto:alexander.hodges@oist.jp)
+
+[ruvindha.lecamwasam@oist.jp](ruvindha.lecamwasam@oist.jp)
+
+*It is possible, though unlikely, for improperly-written FPGA code to [permanently damage your device](https://electronics.stackexchange.com/q/293915/314171). We have tried our best to make sure everything is correct, but we don't take responsibility for any damage that may occur.*
