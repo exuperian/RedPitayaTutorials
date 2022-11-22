@@ -9,11 +9,11 @@ Here are the tutorials we have written so far on FPGA programming with the Red P
 
 ## Full list of tutorials
 
-### Red Pitaya Basics
+### Red Pitaya basics
 
 * [Setting up a Red Pitaya](/Tutorials/SETUP_Connecting)
 
-### Vivado
+### Getting up and running
 
 - [Base Vivado design](/Tutorials/SETUP_BaseCode)
 - [Compiling and running code on the Pitaya](/Tutorials/SETUP_Compiling)
@@ -24,4 +24,4 @@ Here are the tutorials we have written so far on FPGA programming with the Red P
 
 ### Additional information
 
-- [Running Tcl scripts](/Tutorials/TCL_RunningTCL)
+- [Tcl scripts](/Tutorials/TCL_RunningTCL)
