@@ -59,6 +59,7 @@ module binarycounter(
 	input clk,
     output [7:0] count
 	);
+    
 endmodule
 ```
 
