@@ -94,6 +94,7 @@ end
 - `always @ (clk)` means "whenever `clk` changes, do the following"
 - `always @ (posedge clk)` means "whenever `clk` changes from `0` to `1`, do the following". The code will be executed when there is a *positive edge* on `clk`, but not when `clk` changes from `1` to `0`.
 - `always` blocks are contained within a `begin` and `end`.
+- The body increments the count by one. When the value of the `count32` grows larger than what can be represented in 32 bits, it will wrap around back to zero.
 
 Finally, we need to send the last eight bits of `count32` to the output:
 
@@ -121,9 +122,9 @@ module binarycounter(
 endmodule
 ```
 
-Again try and see this code, not as a series of statements to be executed by a processor, but rather describing a physical circuit that will be synthesised.
+Again try not to see this as a series of statements to be executed in order by a processor. Rather this describes a physical circuit that will be synthesised, with one wire going in and eight wires going out. When an oscillating clock signal is sent down the input, the eight output wires will give voltages corresponding to a binary counter.
 
-Make sure you save the code!
+Make sure you save the code before proceeding!
 
 ### Adding the block
 
@@ -137,4 +138,4 @@ That's your binary counter!
 
 You're now ready to [compile and run your design](/Tutorials/SETUP_Compiling), or alternatively [test it out in the simulator](/Tutorials/SETUP_Simulating).
 
-If you want more practice with Verilog and the LED lights, try out [Anton's Knight Rider lights tutorial](http://antonpotocnik.com/?p=488784).
+If you want to try a more complex example see [Anton's Knight Rider lights tutorial](http://antonpotocnik.com/?p=488784), which also has a nice demonstration of parallel execution on the FPGA.
