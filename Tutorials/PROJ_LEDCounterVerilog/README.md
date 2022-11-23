@@ -56,10 +56,9 @@ We write this as
 
 ```verilog
 module binarycounter(
-	input clk,
+    input clk,
     output [7:0] count
 	);
-    
 endmodule
 ```
 
