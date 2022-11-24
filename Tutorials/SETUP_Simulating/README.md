@@ -70,7 +70,7 @@ We can use this testbench to test either of the LED binary counter setups. We'll
 
 #### Verilog binary counter
 
-Let's connect our testbench to the [Verilog  binary counter](/Tutorials/PROJ_LEDCounterVerilog). First you need the name of the module that generated the signal, in our case `binarycounter`. The code is then
+Let's connect our testbench to the [Verilog binary counter](/Tutorials/PROJ_LEDCounterVerilog). First you need the name of the module that generated the signal, in our case `binarycounter`. The code is then
 
 ```verilog
 binarycounter bc (.clk(clock),
@@ -111,7 +111,11 @@ Remember to undo this when you have finished simulating, or next time you synthe
 
 #### Block-design binary counter
 
-This case is much the same, except that we have to create both of Vivado's binary counter and slice blocks, and then connect these together.
+Let's now consider the testbench for the [block design binary counter](/Tutorials/PROJ_LEDCounter). We will have to create create both of Vivado's *Binary Counter* and *Slice* blocks, and then connect these together. As before, we need to remove the slowdown we imposed on the output. First customise the *Slice* block so that it outputs the first eight bits:
+
+![The Binary Counter block connected to Slice, with Dout 7 0 rather than 31 24](img_BlockDesignModified.png)
+
+
 
 ### Running the simulation
 
