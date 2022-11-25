@@ -10,8 +10,12 @@ The website [HDLBits](https://hdlbits.01xz.net/wiki/Main_Page) has lots of examp
 
 ## Red Pitaya
 
-Anton Potočnik has a great set of [FPGA tutorials for the Red Pitaya](http://antonpotocnik.com/?cat=29).
+Anton Potočnik has a great set of [FPGA tutorials for the Red Pitaya](http://antonpotocnik.com/?cat=29), as does [Pavel Denim](http://pavel-demin.github.io/red-pitaya-notes/).
 
 ## Vivado
 
 * [An overview of what constraints are](https://support.xilinx.com/s/article/564948?language=en_US).
+
+## Verilog
+
+* [Timescales in Verilog](https://www.chipverify.com/verilog/verilog-timescale)
