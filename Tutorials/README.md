@@ -17,7 +17,7 @@ Here are the tutorials we have written so far on FPGA programming with the Red P
 
 - [Base Vivado design](/Tutorials/SETUP_BaseCode)
 - [Compiling and running code on the Pitaya](/Tutorials/SETUP_Compiling)
-- [Simulating binary counters in Vivado](/Tutorials/SETUP_Simulating)
+- [Simulating binary counters in Vivado](/Tutorials/PROJ_LEDSimulating)
 
 ### Projects
 
