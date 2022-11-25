@@ -145,7 +145,7 @@ You can try and tidy things up a bit, but it's difficult to make Vivado look the
 * You can use the arrow keys to move blocks up and down.
 * But dragging blocks sideways can rearrange your setup in unexpected ways.
 
-Be careful, *Undo* seems to have trouble moving things back to how they were, so it's easy to end up with a messed-up design.
+Be careful, *Undo* seems to have trouble moving things back to how they were, so it's easy to end up with a messed-up design. If you've screwed up your design past the point of no return, try *Right-click -> Regenerate Layout*.
 
 # What's next?
 
