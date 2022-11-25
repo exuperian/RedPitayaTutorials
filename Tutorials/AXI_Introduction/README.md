@@ -1,16 +1,36 @@
-# Understanding AXI
+# Controlling the LEDs with AXI
 
-The resources for this are the [official AXI Documentation](https://docs.xilinx.com/v/u/en-US/pg144-axi-gpio), [The Zynq Book](http://www.zynqbook.com/), and [Anton's Stopwatch tutorial](http://antonpotocnik.com/?p=489265)
+One of the strengths of the Red Pitaya is that it incorporates both an FPGA, and a full Linux operating system. In this tutorial we'll learn how these two can communicate, allowing you to use the Linux terminal to control the FPGA, and read out data. As a demonstration, we'll control the LED lights on the side of the Pitaya.
 
-The *ZYNQ7 Processing System* has an output port *M_AXI_GP0*. 
+The PS and PL communicate using *AXI*, a protocol used in many systems, not just the Red Pitaya. You can find an overview of the details [here](https://www.allaboutcircuits.com/technical-articles/introduction-to-the-advanced-extensible-interface-axi/), but most of the technicalities are taken care of by Vivado. You just need a general understanding to be able to use it, which is what we will focus on.
 
-## What is AXI?
+This tutorial is based on the [Xilinx AXI Documentation](https://docs.xilinx.com/v/u/en-US/pg144-axi-gpio), Chapters 2.3, 10, and 19 of [The Zynq Book](http://www.zynqbook.com/), and [‪Anton Potočnik's Stopwatch tutorial](http://antonpotocnik.com/?p=489265).
 
-AXI is what allows the processing system and programmable logic to communicate. The *Advanced eXtensible Interface (AXI)* is a general standard supported by many different systems. 
+## Understanding AXI
+
+The *Advanced eXtensible Interface (AXI)* is a common set of rules for transferring data. If a particular component, such as the ZYNQ7 Processing System, has an AXI port, you can transfer data to and from it without any knowledge of how the component works internally. You just use the standard AXI rules to ask for or send information, and the component will handle the rest.
+
+### Red Pitaya's AXI ports
+
+Let's begin by understanding the AXI ports on ZYNQ7 Processing System:
+
+![The ZYNQ7 block in Vivado. On the left and right are several input and output ports.](img_ZYNQ7_Structure.png)
+
+There are four AXI ports on the left: *S_AXI_HP0_FIFO_CTRL*, *S_AXI_HP0*, *M_AXI_GP0_ACLK*, *S_AXI_HP0_ACLK*, and one on the right: *M_AXI_GP0*.
+
+* The naming convention *M_* or *S_* refers to the [*master/slave* terminology in communications](https://en.wikipedia.org/wiki/Master/slave_(technology)). The *master* controls the transfer, either sending or asking for data. The *slave* then takes or provides this data. For the ports denoted *M_* the Processing System is the master, while for the ports denoted *S_* the external FPGA is the master.
+* *GP* stands for *General Purpose*, a way to easily transfer small amounts of data. This is what we will use here to control the LEDs. If we tried to transfer large amounts of data however, such as the signal coming through the analog to digital converters, these would not be fast enough.
+* *HP* stands for *High Performance*. These ports are more complicated to use, but can transfer large amounts of data. We'll get to them in a later tutorial. These transfer data using things called [*FIFO buffers*](https://nandland.com/lesson-8-what-is-a-fifo/).
+* The *0* on the end of *GP0* and *HP0* signify that this is the first port on the device. If the ZYNQ had a second high performance port, it would be called *AXI_HP1*.
+* *ACLK* stands for *AXI Clock*. When two different components are communicating, they need to synchronise when they send and receive data. This is very difficult if they are using two different clocks. Thus these ports take the external clock signal to properly time the transfer. We will be interfacing the ZYNQ with FPGA code driven by *FCLK_CLK0*. Thus we will connect the *ACLK* to *FCLK*.
+
+These ports are quite complicated. You'll notice that some of them have a + symbol. Click this to expand the port, and you'll see that it is made up of many different wires. Thankfully Vivado can handle these connections for us.
+
+### How to exchange data
+
+
 
 The protocol is *memory mapped*. This means an address is specified within the transaction, corresponding to an address in the system memory space. The master specifies the the address of the first word, and the slave calculates the addresses for the rest of the data words.
-
-The connections between the PS and PL are very complicated. There are nine AXI interfaces, each composed of multiple channels. 
 
 There are two types of connections:
 
@@ -23,10 +43,7 @@ The structure is
 
 * *Interconnects* act within the PS.
 
-![](img_ZYNQ7_Structure.png)
-
-* The naming convention M_ or S_ refers to whether the PS is the master or slave.
-* *ACLK* stands for *AXI Clck*
+* 
 
 ![](img_AXIExample.png)
 
@@ -39,7 +56,7 @@ The structure is
 * *M_AXI_GP0* is the *General Purpose AXI*.
   * 32 bit data bus, suitable for low and medium rate communication between PL and PS.
   * 12-bit master port ID width
-  * 6-bit save port ID with
+  * 6-bit slave port ID with
   * Master and slave port acceptance capability of 8 reads and writes.
   * Interface is direct, does not include buffering.
 * *S_AXI_HP0*
@@ -176,7 +193,7 @@ redpitaya> monitor 0x40100014 0x8
 
 **High-level scripts in Bash, Python, MATLAB can communicate with the FPGA using monitor**
 
-- But don't be too blasé. The CPU algorithms also communicate with the FPGA through registers, so you might rip them up.
+- But don't be too blasé. The CPU algorithms also communicate with the FPGA through registers, so you might trip them up.
 
 ## Monitoring voltages with monitor
 
