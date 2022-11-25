@@ -13,7 +13,7 @@ Here are the tutorials we have written so far on FPGA programming with the Red P
 
 * [Setting up a Red Pitaya](/Tutorials/SETUP_Connecting)
 
-### Vivado basics
+### Vivado
 
 - [Base Vivado design](/Tutorials/SETUP_BaseCode)
 - [Compiling and running code on the Pitaya](/Tutorials/SETUP_Compiling)
