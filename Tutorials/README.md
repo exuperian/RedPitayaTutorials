@@ -19,10 +19,13 @@ Here are the tutorials we have written so far on FPGA programming with the Red P
 - [Compiling and running code on the Pitaya](/Tutorials/SETUP_Compiling)
 - [Simulating binary counters in Vivado](/Tutorials/PROJ_LEDSimulating)
 
-### Projects
+### Learn the basics with LEDs
+
+This series of projects introduces the key features of the Red Pitaya through example projects with the board's inbuilt LEDs. These requires no other equipment.
 
 * [LED binary counter](/Tutorials/PROJ_LEDCounter)
 * [LED binary counter with Verilog](/Tutorials/PROJ_LEDCounterVerilog)
+* [Controlling the LEDs with AXI GPIO](/Tutorials/PROJ_LEDAXI)
 
 ### Additional information
 
