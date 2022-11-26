@@ -1,8 +1,8 @@
-# Controlling the LEDs with AXI
+# Controlling the LEDs with AXI GPIO
 
 One of the strengths of the Red Pitaya is that it incorporates both an FPGA, and a full Linux operating system. In this tutorial we'll learn how these two can communicate, allowing you to use the Linux terminal to control the FPGA, and read out data. As a demonstration, we'll control the LED lights on the side of the Pitaya.
 
-The PS and PL communicate using *AXI*, a protocol used in many systems, not just the Red Pitaya. You can find an overview of the details [here](https://www.allaboutcircuits.com/technical-articles/introduction-to-the-advanced-extensible-interface-axi/), but most of the technicalities are taken care of by Vivado. You just need a general understanding to be able to use it, which is what we will focus on.
+The PS and PL communicate using *AXI*, a protocol used in many systems, not just the Red Pitaya. There are two types of AXI on the Pitaya, a simple *General Purpose Input Output (GPIO)*, and a more complex *High Performance (HP)*. Is *GPIO* we will use in this tutorial. You can find an overview of the details [here](https://www.allaboutcircuits.com/technical-articles/introduction-to-the-advanced-extensible-interface-axi/), but most of the technicalities are taken care of by Vivado. You just need a general understanding to be able to use it, which is what we will focus on. In particular, AXI transfers data by referring to particular places in memory. Thus we will need to learn how computers index their memory, which is done in hexadecimal.
 
 This tutorial is based on the [Xilinx AXI Documentation](https://docs.xilinx.com/v/u/en-US/pg144-axi-gpio), Chapters 2.3, 10, and 19 of [The Zynq Book](http://www.zynqbook.com/), and [‪Anton Potočnik's Stopwatch tutorial](http://antonpotocnik.com/?p=489265).
 
@@ -42,11 +42,11 @@ Data on a computer is stored in ones and zeros, which makes working in binary mo
 
 Instead, memory addresses are written in *hexadecimal*, or base sixteen. Since sixteen is a power of two, this number system works very naturally with binary. But the extra digits let us practically address billions of digits. If our computer has one gigabyte of memory, which is a billion ($10^9$) bytes, referring to each byte would require
 
-* $\log(10^9)/log(2)\approx 30$ digits of binary,
-* $log(10^9)/log(10)=9$ digits of base-ten,
-* $log(10^9)/log(16)\approx 8$ digits of hexadecimal.
+* $\log(10^9)/\log(2)\approx 30$ digits of binary,
+* $\log(10^9)/\log(10)=9$ digits of base-ten,
+* $\log(10^9)/\log(16)\approx 8$ digits of hexadecimal.
 
-So how does hexadecimal work? Binary has two digits:
+With a terabyte, base ten would take twelve digits while hexadecimal would require ten. So how does hexadecimal work? Binary has two digits:
 
 `0`, `1`
 
@@ -68,12 +68,37 @@ Here are some numbers written in binary, base ten, and hexadecimal. You can easi
 | 100, 1000         | 64, 3E8       | 1100100, 1111101000             |
 | 32, 64, 128       | 20, 40, 80    | 100000, 1000000, 10000000       |
 | 16, 256, 4096     | 10, 100, 1000 | 10000, 100000000, 1000000000000 |
+| 350, 351, 352     | 15E, 15F, 160 | 101011110, 101011111, 101100000 |
 
 Try and get used to the system by doing some conversions between base ten and hexadecimal. For example, `3E8` corresponds to
 
-$$3\times 16^2+(E\sim 14)\times 16^1 + 8\times 16^0=1000$$.
+$$3\times 16^2+(E\sim 14)\times 16^1 + 8\times 16^0=1000.$$
 
+A memory address is just a number, written in hexadecimal. Typically hexadecimal numbers are preceded by `0x` to signify that they are in base sixteen. So if you see
 
+`0x12AE`
+
+this just means
+
+$$1\times 16^3+2\times 16^2+(A\sim 11)\times 16^1+(E\sim 14)\times 10^0=4782,$$
+
+or the $4782$ th byte in the memory. Adding leading zeros doesn't change anything, so this is the same as
+
+`0x000012AE`
+
+In the decimal system we use a comma to separate large numbers: $4,782$. Similarly in hexadecimal we often use an underscore `_`:
+
+`0x0000_12AE`
+
+While it might look mysterious and technical written like that, remember that it's just a number, referring to a particular byte in memory.
+
+### AXI General Purpose memory layout
+
+An *AXI GPIO* data transfer works by specifying addresses in memory to read from or write to. Data is transferred in blocks of $32$ bits, or $32/8=4$ bytes. Thus a single transfer will require four separate memory addresses.
+
+When using *GPIO*, you'll be given a memory address specifying where to find the first byte of the data, for example `0x13A0`. Then the next three bytes are stored in the next three memory addresses: `0x13A1`, `0x13A2`, `0x13A3`. If you are reading data from the Red Pitya you read from these three addresses. If you are sending data to the Red Pitaya, you write to these four addresses.
+
+How do you read or write from a particular address in memory? The Red Pitaya comes with a command line program called `monitor`. You can give this an address, tell it whether to read or write, and it will do this for you. You can call `monitor` from programs such as Python or MATLAB, allowing you to use these to control the Pitaya.
 
 ## Using AXI
 
