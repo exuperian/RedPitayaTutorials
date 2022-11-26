@@ -4,11 +4,9 @@ In this tutorial we will look at how to compile Vivado design into binary code w
 
 # Procedure
 
-## 0. Make a design
-
 Begin by making a design in Vivado, such as the [LED binary counter](/Tutorials/PROJ_LEDCounter/README.md).
 
-## 1. Generate output products & wrapper
+## Generate output products & wrapper
 
 We need to give the compiler some information about our design. You will only have to do this step once. After this if you modify your design Verilog will automatically mange this step.
 
@@ -28,7 +26,7 @@ You should now have a new wrapper file ending in `.v`. Your constraints files co
 
 ![Design source has been replaced by blue file ending in .v](img_DesignWrapper.png)
 
-## 2. Generate Bitstream
+## Generate Bitstream
 
 We are now ready to convert our design into ones and zeros! Click on *Generate Bitstream* in the bottom of the left sidebar:
 
@@ -44,7 +42,7 @@ Wait until this finishes:
 
 You will get a dialog box saying *Bitstream Generation successfully completed*. If you click *OK* it will open up a low-level view of the device, you can get back to where you were by clicking *Open Block Design* on the left sidebar.
 
-## 3. Running on the Pitaya
+## Running on the Pitaya
 
 Now we need to find the compiled code, which is hidden away inside our project folder. Go to the folder where you saved your project, then open the folder `[project_name].runs`, where *[project_name]* is the name of your project. This should have a subfolder called `impl_1`, containing lots of files. One of these will end in `.bit`, this is what you want. The filename should be the same as the wrapper you generated in step 2.
 
