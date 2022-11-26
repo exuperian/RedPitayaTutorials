@@ -12,7 +12,7 @@ The *Advanced eXtensible Interface (AXI)* is a common set of rules for transferr
 
 ### Red Pitaya's AXI ports
 
-Let's begin by understanding the AXI ports on ZYNQ7 Processing System:
+Let's begin by understanding the AXI ports on the ZYNQ7 Processing System:
 
 ![The ZYNQ7 block in Vivado. On the left and right are several input and output ports.](img_ZYNQ7_Structure.png)
 
@@ -26,7 +26,58 @@ There are four AXI ports on the left: *S_AXI_HP0_FIFO_CTRL*, *S_AXI_HP0*, *M_AXI
 
 These ports are quite complicated. You'll notice that some of them have a + symbol. Click this to expand the port, and you'll see that it is made up of many different wires. Thankfully Vivado can handle these connections for us.
 
-### How to exchange data
+### Memory addresses & hexadecimal
+
+You transfer data via AXI by specifying specific addresses in memory to read from or write to. Thus we must take a moment to understand how computers refer to different parts of memory, and the hexadecimal number system. We'll give a brief overview here, and there are many good tutorials on the internet.
+
+Computer store information in binary, as sequences of zeros and ones. A single digit is referred to as a *bit*. A single bit is too small to contain anything useful. Therefore rather than working with individual bits, computers work with *bytes*, which are groups of eight bits. For example a byte of information may be
+
+`10110010`,
+
+which is made up of eight individual bits `1`, `0`, `1`, `1`, `0`, `0`, `1`, and `0`.
+
+Each byte in a computer's memory is given an *address*. This is just a number associated with the byte, to uniquely identify it. The computer may receive an instruction to write some information to byte number 342, or you may ask to read bytes 1,765-1,768.
+
+Data on a computer is stored in ones and zeros, which makes working in binary more convenient for a computer than working in base-ten. However, since binary only contains two digits, even small numbers can require long sequences of binary. For example, the number 56 is the sequence 111000. Since computers contain billions or trillions of bytes, each of which needs its own address, it would be impractical to write out memory addresses in binary.
+
+Instead, memory addresses are written in *hexadecimal*, or base sixteen. Since sixteen is a power of two, this number system works very naturally with binary. But the extra digits let us practically address billions of digits. If our computer has one gigabyte of memory, which is a billion ($10^9$) bytes, referring to each byte would require
+
+* $\log(10^9)/log(2)\approx 30$ digits of binary,
+* $log(10^9)/log(10)=9$ digits of base-ten,
+* $log(10^9)/log(16)\approx 8$ digits of hexadecimal.
+
+So how does hexadecimal work? Binary has two digits:
+
+`0`, `1`
+
+Base ten has ten digits:
+
+`0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`
+
+Hexadecimal, or base sixteen, requires us to add six more digits. The convention is to use the letters A to F, which gives us
+
+`0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `A`, `B`, `C`, `D`, `E`, `F`
+
+Here are some numbers written in binary, base ten, and hexadecimal. You can easily convert between the three on [this website](https://www.mathsisfun.com/binary-decimal-hexadecimal-converter.html).
+
+| base ten          | hexadecimal   | binary                          |
+| ----------------- | ------------- | ------------------------------- |
+| 0, 1, 2, 3, 4     | 0, 1, 2, 3, 4 | 0, 1, 10, 11, 100               |
+| 9, 10, 11, 12, 13 | 9, A, B, C, D | 1001, 1010, 1011, 1100, 1101    |
+| 15, 16, 17, 18    | F, 10, 11, 12 | 1111, 10000, 10001, 10010       |
+| 100, 1000         | 64, 3E8       | 1100100, 1111101000             |
+| 32, 64, 128       | 20, 40, 80    | 100000, 1000000, 10000000       |
+| 16, 256, 4096     | 10, 100, 1000 | 10000, 100000000, 1000000000000 |
+
+Try and get used to the system by doing some conversions between base ten and hexadecimal. For example, `3E8` corresponds to
+
+$$3\times 16^2+(E\sim 14)\times 16^1 + 8\times 16^0=1000$$.
+
+
+
+## Using AXI
+
+You can transfer data to and from the Red Pitaya in 32 bit chunks. 
 
 
 
