@@ -2,7 +2,7 @@
 
 Here are some references if you want to learn more about FPGA programming.
 
-## FPGA Programming
+## Verilog
 
 * An excellent introduction to the basics is [Introduction to Logic Circuits & Logic Design with Verilog](https://www.amazon.com/Introduction-Logic-Circuits-Design-Verilog-dp-3030136043/dp/3030136043/ref=dp_ob_title_bk), by Brock LaMeres. This covers the required knowledge of binary, basic circuit elements, and how these can be used to do computation.
 

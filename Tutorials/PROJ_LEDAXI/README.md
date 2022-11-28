@@ -80,7 +80,7 @@ A memory address is just a number, written in hexadecimal. Typically hexadecimal
 
 this just means
 
-$$1\times 16^3+2\times 16^2+(A\sim 11)\times 16^1+(E\sim 14)\times 10^0=4782,$$
+$$1\times 16^3+2\times 16^2+(A\sim 11)\times 16^1+(E\sim 14)\times 16^0=4782,$$
 
 or the $4782$ th byte in the memory. Adding leading zeros doesn't change anything, so this is the same as
 
@@ -186,4 +186,4 @@ Being able to control the FPGA from Linux opens up a lot of possibilities! Try p
 
 As well as writing to memory, `monitor` can also provide real-time information about parameters such as temperature, and read/write to some of the analog ports. See the [official monitor documentation](https://redpitaya.readthedocs.io/en/latest/appsFeatures/command_line_tools/com_line_tool.html#monitor-utility) for more information.
 
-See [‪Anton Potočnik's Stopwatch tutorial](http://antonpotocnik.com/?p=489265) for a more advanced application of *GPIO* using two channels, and both input and output. After this if you want to learn more about *AXI* you can read Chapters 2.3, 10, and 19 of [The Zynq Book](http://www.zynqbook.com/), and then the [Xilinx AXI Documentation](https://docs.xilinx.com/v/u/en-US/pg144-axi-gpio).
+See [‪Anton Potočnik's Stopwatch tutorial](http://antonpotocnik.com/?p=489265) for a more advanced application of *GPIO* using two channels, with both input and output. After this if you want to learn more about *AXI* you can read Chapters 2.3, 10, and 19 of [The Zynq Book](http://www.zynqbook.com/), and then the [Xilinx AXI Documentation](https://docs.xilinx.com/v/u/en-US/pg144-axi-gpio).
