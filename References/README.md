@@ -8,6 +8,8 @@ Here are some references if you want to learn more about FPGA programming.
 
 * The website [HDLBits](https://hdlbits.01xz.net/wiki/Main_Page) has lots of example problems to work through. It also has an online simulator, so you can easily check if your answers are correct.
 
+* [Verilog Golden Reference Guide](http://class.ece.iastate.edu/cpre488/resources/verilog_reference_guide.pdf)
+
 ## Red Pitaya
 
 * Anton Potočnik has a great set of [FPGA tutorials for the Red Pitaya](http://antonpotocnik.com/?cat=29). 
