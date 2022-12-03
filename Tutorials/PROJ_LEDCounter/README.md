@@ -1,4 +1,4 @@
-# LED Binary counter
+# LED binary counter
 
 The Red Pitaya has a series of LEDs on the side, which you can use to signal basic information. In this tutorial we'll see how to turn them into a simple binary counter. This is based on [Anton Potočnick's LED Blinker tutorial](http://antonpotocnik.com/?p=487360).
 
