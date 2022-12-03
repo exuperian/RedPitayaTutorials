@@ -4,8 +4,14 @@ Here are some references if you want to learn more about FPGA programming.
 
 ## Red Pitaya
 
+### Projects
+
 * Anton Potočnik has a great set of [FPGA tutorials for the Red Pitaya](http://antonpotocnik.com/?cat=29). 
 * Pavel Denim has done many [projects with comprehensive write-ups](http://pavel-demin.github.io/red-pitaya-notes/).
+* Koheron has several projects with writeups [on their GitHub](https://github.com/Koheron/koheron-sdk/tree/master/examples/red-pitaya).
+
+### Datasheets
+
 * Datasheets for the [Analog to Digital Converter (ADC)](https://www.analog.com/media/en/technical-documentation/data-sheets/21454314fa.pdf), and [Digital to Analog Converter (DAC)](https://www.renesas.com/us/en/document/dst/dac1401d125-datasheet).
 
 ## Verilog
