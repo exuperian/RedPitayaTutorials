@@ -53,7 +53,7 @@ output wire [DAC_DATA_WIDTH-1:0]   dac_dat,
 * `dac_sel` selects which of the two DAC outputs the data should be sent to. The code will make this oscillate between 0 and 1 at 250MHz, so that both DAC outputs are active.
 * `dac_dat` is a vector of length *DAC_DATA_WIDTH* which carries the data to the DAC. The reason for the '-1' is because a vector of length 14 is indexed [13:0].
 
-* From the name `dac_clk`, Vivado infers that this output carries a clock signal. Vivado likes to know the lock frequency that this will carry, so we tell it that this will be 250MHz with the line `(* X_INTERFACE_PARAMETER = "FREQ_HZ 250000000" *)`. The code will work just fine if you remove this, however when you import the module Vivado will show a warning complaining that it doesn't know the clock speed.
+* This is a slight modification to Pavel's code. From the name `dac_clk`, Vivado infers that this output carries a clock signal. Vivado likes to know the lock frequency that this will carry, so we tell it that this will be 250MHz with the line `(* X_INTERFACE_PARAMETER = "FREQ_HZ 250000000" *)`. The code will work just fine if you remove this, however when you import the module Vivado will show a warning complaining that it doesn't know the clock speed.
 
 Finally we have the wires which handle the *AXIS* connection, accepting data from the *Direct Digital Synthesiser*:
 
