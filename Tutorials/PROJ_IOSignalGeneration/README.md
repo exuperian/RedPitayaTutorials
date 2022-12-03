@@ -57,7 +57,7 @@ In the left of the *Customize block* dialog, you can see the block inputs and ou
 
 #### Other DDS settings
 
-We need to tweak the DDS block a bit more. In the *Configuration* tab, set the *System Clock* to 125MHz to match our Pitaya:
+We need to tweak the DDS block a bit more. In the *Configuration* tab, set the *System Clock* to 250MHz to match our Pitaya:
 
 ![Under heading System Requirements, System Clock (MHz) has been set to 125](img_SystemClockCustomisation.png)
 
@@ -95,7 +95,7 @@ Click *Add IP*, and choose *Clocking Wizard*:
 
 ![](img_ClockingWizardInputFreq.png)
 
-Next go to the *Output Clocks* tab. At the top set the *clk_out1* *Output Freq* to 125MHz:
+Next go to the *Output Clocks* tab. At the top set the *clk_out1* *Output Freq* to 250MHz:
 
 ![](img_OutputClockFreq.png)
 

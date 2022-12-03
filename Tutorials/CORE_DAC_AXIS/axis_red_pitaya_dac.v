@@ -1,6 +1,7 @@
 //axis_red_pitaya_dac_v2_0
 //Downloaded from Pavel Denim's Github repo
 //https://github.com/pavel-demin/red-pitaya-notes/blob/master/cores/axis_red_pitaya_dac_v2_0/axis_red_pitaya_dac.v
+//Slightly modified to provide FREQ_HZ bus parameter
 
 
 `timescale 1 ns / 1 ps
@@ -18,6 +19,10 @@ module axis_red_pitaya_dac #
   input  wire                        locked,
 
   // DAC signals
+  // Modification to Pavel's code:
+  // Let Vivado know dac_clk will be 250MHz,
+  // otherwise it will show a warning
+  (* X_INTERFACE_PARAMETER = "FREQ_HZ 250000000" *)
   output wire                        dac_clk,
   output wire                        dac_rst,
   output wire                        dac_sel,
