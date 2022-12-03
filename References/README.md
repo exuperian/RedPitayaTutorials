@@ -16,6 +16,10 @@ Here are some references if you want to learn more about FPGA programming.
 
 ## FPGA Programming
 
+* [Verilog Golden Reference Guide](http://class.ece.iastate.edu/cpre488/resources/verilog_reference_guide.pdf)
+
+## Red Pitaya
+
 - [Glitches and Hazards in Digital Circuits, by John Knight](https://www.doe.carleton.ca/~shams/ELEC3500/hazards.pdf)
 
 ## Vivado
