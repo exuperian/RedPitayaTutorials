@@ -47,7 +47,8 @@ Learn how to use the fast analog input and output ports. You'll need an oscillos
 ### Cores
 
 * [ODDR for Dual Data Rate output](/Tutorials/CORE_ODDR)
-* [Pavel's AXIS DAC](/Tutorials/CORE_DAC_AXIS)
+* [DAC AXIS Stream](/Tutorials/CORE_DAC_AXIS)
+* [ADC AXIS Stream](/Tutorials/CORE_ADC_AXIS)
 
 ### Vivado
 
