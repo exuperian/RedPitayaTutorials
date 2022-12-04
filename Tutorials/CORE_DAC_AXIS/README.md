@@ -1,6 +1,6 @@
 # Pavel's AXIS DAC Core
 
-Here we'll go through Pavel Denim's [AXIS DAC Core v2](https://github.com/pavel-demin/red-pitaya-notes/blob/master/cores/axis_red_pitaya_dac_v2_0/axis_red_pitaya_dac.v), which converts an AXI Stream into a signal to send to the Pitaya's DAC output ports. You can download the Vivado file *axis_red_pitaya_dac.v* from this folder.
+Here we'll describe a core that sends an AXI Stream input to the Pitaya's DAC output ports. This is based on Pavel Denim's [AXIS DAC Core v2](https://github.com/pavel-demin/red-pitaya-notes/blob/master/cores/axis_red_pitaya_dac_v2_0/axis_red_pitaya_dac.v), with very minor modifications. You can download the Vivado file *axis_red_pitaya_dac.v* from this folder.
 
 While the Red Pitaya has two fast analog outputs, there is only one pin in the Vivado model to send data to the DAC. Typically signals in the FPGA are sent on every rising edge of the clock signal from the Red Pitaya. The DAC however takes a [*Double Data Rate*](https://en.wikipedia.org/wiki/Double_data_rate) input, where signals are sent at double speed, with every rising and falling edge of the clock. The two signals for the DACs are combined into a single signal switching between them at double the clock speed. We create this combined signal using a *ODDR module*. Here we'll focus on how to use them, but more details are [here](/Tutorials/CORE_ODDR).
 
@@ -244,6 +244,7 @@ Finally we create a DDR signal for the output data. The output `Q` on the *ODDR*
 
 ```verilog
   genvar j;
+
   generate
     for(j = 0; j < DAC_DATA_WIDTH; j = j + 1)
     begin : DAC_DAT

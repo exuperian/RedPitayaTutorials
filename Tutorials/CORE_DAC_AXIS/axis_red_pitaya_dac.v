@@ -1,7 +1,7 @@
-//axis_red_pitaya_dac_v2_0
-//Downloaded from Pavel Denim's Github repo
+//Based on Pavel Denim's axis_red_pitaya_dac_v2_0
 //https://github.com/pavel-demin/red-pitaya-notes/blob/master/cores/axis_red_pitaya_dac_v2_0/axis_red_pitaya_dac.v
-//Slightly modified to provide FREQ_HZ bus parameter
+//Minor modifications by Ruvi Lecamwasam, adding X_INTERFACE_PARAMETER because
+//otherwise Vivado complains about missing FREQ_HZ, and sets everything to 100MHz.
 
 
 `timescale 1 ns / 1 ps
