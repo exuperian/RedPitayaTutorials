@@ -2,7 +2,7 @@
 
 In the [sine wave tutorial](/Tutorials/PROJ_IOSignalGeneration) we generated outputs from the fast DACs on the front of the Pitaya. We'll now learn how to use the analog inputs. As an example, we'll make a simple feedthrough that takes in data through the ADC inputs, and passes them straight through to the DAC outputs.
 
-To interface with the analog ports, we'll use slightly modified versions of [Pavel Denim's ADC and DAC cores](https://github.com/pavel-demin/red-pitaya-notes/tree/master/cores). These are described by the Verilog files `axis_red_pitaya_adc.v `  which you can download from this folder `axis_red_pitaya_dac.v`. You can use them just fine as "black boxes", but we recommend eventually checking out the details of how they work, given [here for the DAC](/Tutorials/CORE_DAC_AXIS) and [here for the ADC](/Tutorials/CORE_ADC_AXIS).
+To interface with the analog ports, we'll use slightly modified versions of [Pavel Denim's ADC and DAC cores](https://github.com/pavel-demin/red-pitaya-notes/tree/master/cores). These are described by the Verilog files `axis_red_pitaya_adc.v `  which you can download from this folder `axis_red_pitaya_dac.v`. You can use them just fine as "black boxes", but we recommend eventually checking out the details of how they work, see [here for the DAC](/Tutorials/CORE_DAC_AXIS) and [here for the ADC](/Tutorials/CORE_ADC_AXIS).
 
 ## Block design
 
