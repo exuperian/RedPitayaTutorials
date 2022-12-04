@@ -30,9 +30,11 @@ Similarly, connect the output ports on the *dac* to the matching DAC pins:
 
 ![dac_clk to dac_clk_o, dac_rst to dac_rst_o, dac_sel to dac_sel_o dac_wrt to dac_wrt_0, dac_dat to dac_dat_o](img_DACOutput.png)
 
-*m_axis* will be a 32 bit vector, the first 16 bits of which correspond to the first analog input, and the second 16 bits the second analog input. Similarly *s_axis* expects a 32 bit vector, the first half will be sent to the first analog output and the second half to the next.
+* *m_axis* will be a 32 bit vector, the first 16 bits of which correspond to the first analog input, and the second 16 bits the second analog input. Similarly *s_axis* expects a 32 bit vector, the first half will be sent to the first analog output and the second half to the next.
 
-For the STEMLab-14, the ADC and DAC have a size of 14 bits. The ADC inputs are padded to 16 bits to be a whole number of bytes, and you can process them with Verilog modules as if they were 16 bit numbers. When you send them to the DAC however the leftmost two bits will be ignored.
+* For the STEMLab-14, the ADC and DAC have a size of 14 bits. The ADC inputs are padded to 16 bits to be a whole number of bytes, and you can process them with Verilog modules as if they were 16 bit numbers. When you send them to the DAC however the leftmost two bits will be ignored.
+
+Finally, connect the *adc_csn* output port on the *adc* to the *adc_csn_0* output pin.
 
 ### Clock signal
 
@@ -40,7 +42,9 @@ Previously we used the *FCLK_CLK0* signal to time our design. However since we a
 
 As in the [signal generation tutorial](/Tutorials/PROJ_IOSignalGeneration), we need to create a double frequency clock signal for the DAC. As described there, add a *Clocking Wizard* IP, set the input frequency to 125MHz, the output frequency to 250MHz, and disable the *reset* input.
 
-Connect the *adc_clk* output from the ADC to the input *clk_out1* on the *Clocking Wizard*. Then connect the *clk_out1* and *locked* outputs from the *Clocking Wizard* to the *ddr_clk*, *wrt_clk*, and *locked* inputs on the *dac*:
+* Connect the *adc_clk* output from the ADC to the input *clk_out1* on the *Clocking Wizard*, and the *aclk* port on the dac. 
+
+* Then connect the *clk_out1* and *locked* outputs from the *Clocking Wizard* to the *ddr_clk*, *wrt_clk*, and *locked* inputs on the *dac*:
 
 ![](img_ClockConnections.png)
 
@@ -58,4 +62,6 @@ That's it! Try it out and check that it works.
 
 ## What's next?
 
-If you want to design a feedback system, you can add scaling, filtering, and a time delay to the signal before it's sent to the DAC. You could even make this controllable through the Linux operating system with [GPIO](/Tutorials/PROJ_LEDAXI).
+* If you want to use the Red Pitaya for feedback, you can add scaling, filtering, and a time delay to the signal before it's sent to the DAC. 
+  * You could even make the feedback parameters controllable in realtime through the Linux operating system with [GPIO](/Tutorials/PROJ_LEDAXI).
+* Vivado has premade blocks which can do filtering, PID control, and more.
