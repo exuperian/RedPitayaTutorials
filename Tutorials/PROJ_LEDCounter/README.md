@@ -1,8 +1,8 @@
 # LED binary counter
 
-The Red Pitaya has a series of LEDs on the side, which you can use to signal basic information. In this tutorial we'll see how to turn them into a simple binary counter. This is based on [Anton Potočnick's LED Blinker tutorial](http://antonpotocnik.com/?p=487360).
+The Red Pitaya has a series of LEDs on the side, which you can use to signal basic information. In this tutorial we'll see how to use them as a simple binary counter. This is based on [Anton Potočnick's LED Blinker tutorial](http://antonpotocnik.com/?p=487360).
 
-The blocks in Vivado represent basic elements which communicate with each other in binary. Programming an FPGA therefore requires a basic understanding of how binary works. You don't need to know how to program in 1s and 0s, since Vivado already has premade blocks that do the processing for you. You just need to manage how these talk to each other, and communicate with the ports. We'll introduce the required bits of binary as we go.
+The blocks in Vivado represent basic elements which communicate with each other in binary. Using an FPGA therefore requires a basic understanding of how binary works. You don't need to know how to program in 1s and 0s, since Vivado already has premade blocks that do the processing for you. You just need to manage how these talk to each other, and communicate with the inputs and outputs. We'll introduce the required bits of binary as we go.
 
 ![LED Location on device](img_LEDLocation.png)
 
@@ -16,7 +16,7 @@ Most digital circuits need a clock signal, which oscillates between 0 and 1 at a
 
 ### Binary counters
 
-The clock signal is too fast to drive the LEDs directly, so we have to slow it down. The simplest way to do this is with a *binary counter*. Lots of great expositions come up if you search "How to count in Binary", so we'll just give a brief overview here. 
+The Red Pitaya's clock signal is 125MHz, so we have to slow it down if we want to be able to see the LEDs blinking. The simplest way to do this is with a *binary counter*. Lots of great expositions come up if you search "How to count in Binary", so we'll just give a brief overview here. 
 
 Our regular number system is base ten. This means that we have ten digits that we count with:
 
@@ -89,7 +89,7 @@ This should create a *Binary Counter* block in your design:
 This has one input and one output:
 
 * On the left, *CLK* signifies that this takes a clock signal.
-* On the right the counter outputs a vector *Q* with sixteen bits, indexed from 15 to 0. It is typical for the 0th index to refer to the right-most component of the vector, rather than the left-most as in programming languages such as Python. To see why, look back at the binary counter. The right-most bit refers to the $2^0$ component, the next right-most to the $2^1$, and so on. So by indexing vectors from the right, the vector element $k$ represents the $2^k$ component.
+* On the right the counter outputs a vector *Q* with sixteen bits, indexed from 15 to 0. It is typical for the 0th index to refer to the right-most component of the vector, rather than the left-most as in programming languages such as Python. To see why, consider what we just learned about a binary counter. The right-most bit refers to the $2^0$ component, the next right-most to the $2^1$, and so on. So by indexing vectors from right-to-left, the element $k$ represents the $2^k$ component.
 
 ## 2. Customise the Counter
 
@@ -139,14 +139,14 @@ Click and drag to make wires connecting *FCLK_CLK0* → *Binary Counter* → *Sl
 
 ![Full block design with everything connected](img_ConnectedDesign.png)
 
-You can try and tidy things up a bit, but it's difficult to make Vivado look the way you want.
+You can try and tidy the design up a bit. The simplest thing to do is *Right-click -> Regenerate Layout*, in which case Vivado will arrange the blocks as it sees fit. If you want to manually move things around, your options are:
 
 * Clicking on a block, then pressing *Ctrl+R*, will rotate it.
 * You can use the arrow keys to move blocks up and down.
 * But dragging blocks sideways can rearrange your setup in unexpected ways.
 
-Be careful, *Undo* seems to have trouble moving things back to how they were, so it's easy to end up with a messed-up design. If you've screwed up your design past the point of no return, try *Right-click -> Regenerate Layout*.
+Be careful, *Undo* seems to have trouble moving things back to how they were.
 
-# What's next?
+## What's next?
 
 You now have a design that should make the LEDs blink as a binary counter! Next check out our tutorial on [compiling and running code](/Tutorials/SETUP_Compiling) to deploy it on the Red Pitaya.

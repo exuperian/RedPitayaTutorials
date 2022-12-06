@@ -22,7 +22,7 @@ Now right-click again and choose *Generate HDL Wrapper*:
 
 ![Right clicking the design](img_CreateHDLWrapper.png)
 
-You should now have a new wrapper file ending in `.v`. Your constraints files contained information on how the ports in the block diagram corresponded to the physical pins on the Red Pitaya. This new file represents this information into a format the compiler can understand.
+You should now have a new wrapper file ending in `.v`. Your constraints files contained information on how the ports in the block diagram corresponded to the physical pins on the Red Pitaya. This new file represents this information in a format the synthesiser (the program that creates a circuit from your diagram) can understand.
 
 ![Design source has been replaced by blue file ending in .v](img_DesignWrapper.png)
 
@@ -32,15 +32,15 @@ We are now ready to convert our design into ones and zeros! Click on *Generate B
 
 ![Button saying GenerateBitstream](img_GenerateBitstreamButton.png)
 
-It may not look like anything is happening, because the progress indicator in Vivado is tucked away in the upper-right. There is a little status indicator, which lets you know that the compiler is running. 
+It may not look like anything is happening, because the progress indicator in Vivado is tucked away in the upper-right:
 
-![Text in top right saying Running synth design](img_RunningDesign.png)
+![Text in top right saying Running synth design, just under the minimise/restore/close window buttons](img_RunningDesign.png)
 
 Wait until this finishes:
 
 ![Text in top right saying write bitstream complete](img_WriteBitstreamComplete.png)
 
-You will get a dialog box saying *Bitstream Generation successfully completed*. If you click *OK* it will open up a low-level view of the device, you can get back to where you were by clicking *Open Block Design* on the left sidebar.
+You will then get a dialog box saying *Bitstream Generation successfully completed*. If you click *OK* it will open up a low-level view of the device, you can get back to where you were by clicking *Open Block Design* on the left sidebar.
 
 ## Running on the Pitaya
 
@@ -68,6 +68,6 @@ where again the name of your `.bit` file may differ. This will make the Pitaya e
 
 # What next?
 
-You now know how to compile and run FPGA code for the Red Pitaya! Check out some of our projects.
+You now know how to compile and run FPGA code for the Red Pitaya! Check out some of our [tutorials](/Tutorials/HOME_Tutorials).
 
 Remember that if you tinker with your project and re-compile, you don't have to worry about step 1. The HDL wrapper will automatically update, so all you need to do is generate the bitstream.

@@ -1,6 +1,6 @@
 #Code to set up and configure a Red Pitaya in Vivado.
 #Original code by Anton Potocnik https://github.com/apotocnik/redpitaya_guide
-#Code has been combined and slightly modified by Ruvi Lecamwasam & Alex Hodges for https://github.com/exuperian/RedPitayaTutorials
+#Code has been combined and slightly modified by Ruvi Lecamwasam for https://github.com/exuperian/RedPitayaTutorials
 
 startgroup
 
@@ -55,8 +55,10 @@ endgroup
 
 # Buffers for differential IOs
 startgroup
-create_bd_cell -type ip -vlnv xilinx.com:ip:util_ds_buf util_ds_buf_0
-set_property -dict [list CONFIG.C_SIZE {2}] [get_bd_cells util_ds_buf_0]
+#In recent versions Vivado assigns IBUF a clock speed of 100MHz which can't be changed.
+#So we'll handle the differential clock signal in the ADC block.
+#create_bd_cell -type ip -vlnv xilinx.com:ip:util_ds_buf util_ds_buf_0
+#set_property -dict [list CONFIG.C_SIZE {2}] [get_bd_cells util_ds_buf_0]
 
 create_bd_cell -type ip -vlnv xilinx.com:ip:util_ds_buf util_ds_buf_1
 set_property -dict [list CONFIG.C_SIZE {2}] [get_bd_cells util_ds_buf_1]
@@ -68,8 +70,9 @@ endgroup
 
 #Conections
 startgroup
-connect_bd_net [get_bd_ports adc_clk_p_i] [get_bd_pins util_ds_buf_0/IBUF_DS_P]
-connect_bd_net [get_bd_ports adc_clk_n_i] [get_bd_pins util_ds_buf_0/IBUF_DS_N]
+#Ignore ADC buffer
+#connect_bd_net [get_bd_ports adc_clk_p_i] [get_bd_pins util_ds_buf_0/IBUF_DS_P]
+#connect_bd_net [get_bd_ports adc_clk_n_i] [get_bd_pins util_ds_buf_0/IBUF_DS_N]
 connect_bd_net [get_bd_ports daisy_p_i] [get_bd_pins util_ds_buf_1/IBUF_DS_P]
 connect_bd_net [get_bd_ports daisy_n_i] [get_bd_pins util_ds_buf_1/IBUF_DS_N]
 connect_bd_net [get_bd_ports daisy_p_o] [get_bd_pins util_ds_buf_2/OBUF_DS_P]

@@ -33,9 +33,10 @@ Learn key features of the Red Pitaya through example projects with its inbuilt L
 
 ### Input and output
 
-Learn how to use the fast analog input and output ports.
+Learn how to use the fast analog input and output ports. You'll need an oscilloscope and signal generator to test these out.
 
 * [Generating a sine wave](/Tutorials/PROJ_IOSignalGeneration)
+* [Feeding an input signal through to the output](/Tutorials/PROJ_IOFeedthrough)
 
 ## Additional information
 
@@ -46,7 +47,8 @@ Learn how to use the fast analog input and output ports.
 ### Cores
 
 * [ODDR for Dual Data Rate output](/Tutorials/CORE_ODDR)
-* [Pavel's AXIS DAC](/Tutorials/CORE_DAC_AXIS)
+* [DAC AXIS Stream](/Tutorials/CORE_DAC_AXIS)
+* [ADC AXIS Stream](/Tutorials/CORE_ADC_AXIS)
 
 ### Vivado
 
