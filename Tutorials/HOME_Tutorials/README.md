@@ -29,6 +29,7 @@ Learn key features of the Red Pitaya through example projects with its inbuilt L
 
 * [LED binary counter](/Tutorials/PROJ_LEDCounter)
 * [LED binary counter with Verilog](/Tutorials/PROJ_LEDCounterVerilog)
+* [Simulating binary counters in Vivado](/Tutorials/PROJ_LEDSimulating)
 * [Controlling the LEDs with AXI GPIO](/Tutorials/PROJ_LEDAXI)
 
 ### Input and output
