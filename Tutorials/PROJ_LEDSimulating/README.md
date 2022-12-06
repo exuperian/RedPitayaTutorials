@@ -81,7 +81,7 @@ binarycounter bc (.clk(clock),
 
 In previous tutorials we drew connections between components by clicking and dragging with the mouse in the Design view. This does exactly the same thing, just in script form.
 
-The module is then:
+The full testbench is then:
 
 ```verilog
 module counter_tb();
@@ -98,20 +98,20 @@ module counter_tb();
 endmodule
 ```
 
-**If we just simulate this however, we won't see any output.** Recall that we used a binary counter to slow down the output by a factor of $2^{24}$, thus we will need to simulate $2^24\approx 10^7$ clock cycles just to see the first output on the counter.  This would take far too long. Thus for the purposes of simulation, go back to the `binarycounter` module, and change the last line to
+**If we just simulate this however, we won't see any output.** Recall that we used a binary counter to slow down the output by a factor of $2^{24}$, thus we would need to simulate $2^24\approx 10^7$ clock cycles just to see the first output on the counter.  This would take far too long. Thus for the purposes of simulation, go back to the `binarycounter` module, and change the last line to
 
 ```verilog
 //assign count = count32[31:24] Commented out for simulation
 assign count = count32[7:0]
 ```
 
-Remember to undo this when you have finished simulating, or next time you synthesis your counter will run at light-speed!
+Remember to undo this when you have finished simulating, or next time you synthesise, your counter will run at light-speed!
 
 #### Block-design binary counter
 
 The testbench for the [block design binary counter](/Tutorials/PROJ_LEDCounter) is a bit more complicated. If you look in the *Simulation Sources* folder, you'll see that it has a `.v` file for your testbench, and also for the entire block design. We need to create a third file, corresponding to the blocks we care about, which the testbench can access.
 
-In the LED blinker design, we have Binary Counter* and *Slice* blocks connected together. As before, **we need to remove the slowdown we imposed on the output**, so customise the *Slice* block so that it outputs the **first** eight bits:
+In the LED blinker design, we have *Binary Counter* and *Slice* blocks connected together. As before, **we need to remove the slowdown we imposed on the output**, so customise the *Slice* block so that it outputs the **first** eight bits:
 
 ![The Binary Counter block connected to Slice, with Dout 7 0 rather than 31 24](img_BlockDesignModified.png)
 
@@ -121,7 +121,7 @@ Now, *Right-click* the Hierarchy and select *Validate Design*, then *Right-click
 
 ![In Design sources, have zynq_led_wrapper.v and counter_block.bd. In Simulation Sources sim1 zynq_led_wrapper.v counter_tb.v and counter_block.bd ](img_SourcesBlockTest.png)
 
-We can see that `counter_block` is yellow and ends in `.bd`, unlike the blue `.v` Verilog files. *Right-click* `counter_block` (either one) and select *Generate HDL Wrapper*, then Vivado will create Verilog files for these:
+We can see that `counter_block` is yellow and ends in `.bd`, unlike the blue `.v` Verilog files. *Right-click* `counter_block` (either in *Simulation Sources* or *Design Sources*) and select *Generate HDL Wrapper*. Vivado will then create Verilog files for these:
 
 ![Same as above, but now all files end in .v](img_SourcesBlockWrapped.png)
 

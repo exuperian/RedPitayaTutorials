@@ -139,6 +139,6 @@ That's your binary counter!
 
 ## What's next?
 
-You're now ready to [compile and run your design](/Tutorials/SETUP_Compiling), or alternatively [test it out in the simulator](/Tutorials/PROJ_LEDSimulating).
+You're now ready to [compile and run your design](/Tutorials/SETUP_Compiling), or [test it out in the simulator](/Tutorials/PROJ_LEDSimulating).
 
 If you want to try a more complex example see [Anton's Knight Rider lights tutorial](http://antonpotocnik.com/?p=488784), which also has a nice demonstration of parallel execution on the FPGA.
