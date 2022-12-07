@@ -126,7 +126,7 @@ To set up the block, *Right-click -> Customize Block*. This will give you the fo
 - Similarly if you tick *All Outputs*, you'll just be left with *gpio_io_o*.
 - If you tick *Enable Dual Channel* you get a second *GPIO* channel, allowing you to have two separate data inputs and outputs from your device.
 
-For our first example we want to send data from the Linux terminal to the FPGA logic. So just tick *All Outputs*.
+For our first example we want to send data from the Linux terminal to the FPGA logic. So just tick *All Outputs*, then press *OK*.
 
 ### Connect GPIO to the Processing System
 
@@ -149,7 +149,7 @@ There should now be two more blocks in your design.
 * *AXI Interconnect* handles the connection between the *Processing System*, and our *AXI GPIO* block.
 * *Processing System Reset* makes sure the interconnect is initialised properly, and handles synchronisation issues if you are using several different clock signals.
 
-This is starting to look serious! Thankfully we don't have to worry about these two blocks.
+Thankfully we don't have to worry about these two blocks.
 
 ### Set memory address
 
@@ -163,7 +163,7 @@ Keep note of the *Master Base Address*, as this is the address you'll have to wr
 
 ### Connect output to LEDs
 
-Lastly, use a *Slice* block to connect the first seven bits of the *GPIO* to *led_o*:
+Lastly, use a *Slice* block to connect the **first** seven bits (indices 7:0) of the *GPIO* to *led_o* . You'll have to expand the *GPIO* port to do this:
 
 ![Full block design, with a slice taking gpio_io_o and outputing bits 7:0](img_BlockDesignFull.png)
 
@@ -171,12 +171,17 @@ Lastly, use a *Slice* block to connect the first seven bits of the *GPIO* to *le
 
 Compile and run the code on the Pitaya as described in [our tutorial](/Tutorials/SETUP_Compiling), and run the bitstream using `cat`. If everything is right, nothing should happen just yet.
 
-The Red Pitaya has a tool called `monitor` that you can use to read and write individual addresses. `ssh` into the Pitaya to use this. To turn on the first LED, run
+The Red Pitaya has a tool called `monitor` that you can use to read and write individual addresses. `ssh` into the Pitaya to use this. To find the current state of the LEDs, run
+
+`> monitor 0x41200000`
+
+`0x4120000` is the *Master Base Address* from the *Address Editor*. If yours was different, you'll have to use that instead. This will return the value stored at that memory address, which should be `0x00000000`.
+
+To turn on the first LED, run
 
 `> monitor 0x41200000 1`
 
-* `0x4120000` is the *Master Base Address* from the *Address Editor*. If yours was different, you'll have to use that instead.
-* We have set the memory at that address equal to 1, which in binary is a string of zeros ending in `1`. This should thus make a single LED turn on. If you set it equal to 2, which is a string of binary ending in `10`, you should see the second LED turn on. Play around with different numbers, and check that the lights which turn on match their binary expansion.
+This sets the memory at that address equal to 1, which in binary is a string of zeros ending in `1`. This should thus make a single LED turn on. If you set it equal to 2, which is a string of binary ending in `10`, you should see the second LED turn on. Play around with different numbers, and check that the lights which turn on match their binary expansion.
 
 Be careful when using `monitor`, writing to random memory addresses could crash the device! It shouldn't be possible to do any permanent damage though, so if you run into any problems just re-start the Pitaya.
 

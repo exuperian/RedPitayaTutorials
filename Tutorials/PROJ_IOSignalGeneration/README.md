@@ -28,7 +28,7 @@ We'll first set up a *DDS* block to create the output signal. Click *Add IP*, an
 
 *AXIS* stands for *AXI Stream*, a protocol the block uses to transfer continuous "streams" of data. In an earlier project we met the [AXI GPIO](/Tutorials/PROJ_LEDAXI) protocol. *AXI* is a general-purpose connector, used by many blocks for their inputs and outputs.
 
-* The input *aclk* is the clock signal. The '*a*' stands for *AXI*, since the clock is used to coordinate the *AXI* data transfers. Connect this to the Pitaya's *FCLK_CLK0*.
+* The input *aclk* is the clock signal. The '*a*' stands for *AXI*, since the clock is used to coordinate the *AXI* data transfers.
 * The phase $\phi$ the DDS generates is sent out *M_AXIS_PHASE*.
 * By default, the DDS outputs both a sine and cosine wave in *M_AXIS_DATA*. 
 
@@ -57,7 +57,7 @@ In the left of the *Customize block* dialog, you can see the block inputs and ou
 
 #### Other DDS settings
 
-We need to tweak the DDS block a bit more. In the *Configuration* tab, set the *System Clock* to 250MHz to match our Pitaya:
+We need to tweak the DDS block a bit more. In the *Configuration* tab, set the *System Clock* to 125MHz to match our Pitaya:
 
 ![Under heading System Requirements, System Clock (MHz) has been set to 125](img_SystemClockCustomisation.png)
 
@@ -77,11 +77,11 @@ Finally in the *Output Frequencies* tab, we can choose the frequencies of the ge
 
 ![Under the tab Output Frequencies, channel 1 has Output Frequency (MHz) set to 0.02. The other channels are all greyed out.](img_DDSOutputFreqs.png)
 
-You can look through the *Summary* and *Additional Summary* tabs to make sure all the settings are correct.
+You can look through the *Summary* and *Additional Summary* tabs to make sure all the settings are correct. Then press *OK*, and connect *aclk* to the Processing Systems' *FCLK_CLK0*.
 
 ### Clocking wizard
 
-To time the signals, the DAC needs to take both the system 125MHz clock, as well as a doubled 250MHz clock. We can use a *Clocking Wizard* block in Vivado to generate the doubled clock, see [here](https://electronics.stackexchange.com/questions/110134/how-to-double-my-clocks-frequency-using-digital-design) for some discussion on how a circuit can increase the clock frequency.
+To time the signals, the DAC needs to take both the system 125MHz clock, as well as a doubled 250MHz clock. We can use a *Clocking Wizard* block in Vivado to generate the doubled clock, see [here](https://electronics.stackexchange.com/questions/110134/how-to-double-my-clocks-frequency-using-digital-design) for some discussion on how this could be implemented physically.
 
 Click *Add IP*, and choose *Clocking Wizard*:
 
@@ -89,7 +89,7 @@ Click *Add IP*, and choose *Clocking Wizard*:
 
 - We send in a clock signal through *clk_in1*, and receive our modified clock through *clk_out1*.
 - Signals take time to change, and can fluctuate due to the finite travel time of electrical signals. When the output *locked* is set to one, it means that the clock signal can be trusted. We need this for the DAC.
-- The *reset* input can be used to clear and restart the clock. We won't need this.
+- The *reset* input can be used to clear and restart the clock. We won't use this.
 
 *Right-click -> Customize Block*. In the first tab *Clocking Options*, at the bottom set the *clk_1* input frequency to 125MHz to match the Pitaya's clock. You'll have to change the switch from *Auto* to *Manual*:
 
@@ -111,18 +111,19 @@ After you have finished, connect *clk_in1* to the Pitaya's *FCLK_CLK0*.
 
 Finally we need to send the waveform to the Pitaya's DAC outputs. We will do this using [Pavel Denim's AXIS DAC v2](https://github.com/pavel-demin/red-pitaya-notes/blob/master/cores/axis_red_pitaya_dac_v2_0/axis_red_pitaya_dac.v). Eventually we recommend checking out the [details of how this works](/Tutorials/CORE_DAC_AXIS), but you can also just use it as a 'black box' for simple applications.
 
-Download the file *axis_red_pitaya_dac.v* from this folder (or alternatively from Pavel's GitHub).
+Download the file *axis_red_pitaya_dac.v* from this folder.
 
 In Vivado on the left sidebar, select *Add Sources*, and choose *Add or create design sources*. Click on *Add Files*, add the *axis_red_pitaya_dac.v* file, and press finish. You should now have a new file under *Sources*:
 
 ![](img_SourcesWithAXISDAC.png)
 
 * In the picture above, *zynq_wrapper* is the source for our Block Design, which is blue because we have already run *Generate Output Products* and *Create HDL Wrapper*. If you haven't done this yet yours will be orange. It doesn't matter when you generate the wrapper, so long as you do it before generating the bitstream.
-* If you have generated the wrapper, your block design should be in bold, telling Verilog that this is the main project it should compile. If yours isn't, *Right-Click -> Set as Top*.
+* If you have already generated the wrapper for your Block Design, the original block design (for us *zynq_wrapper*) should still be in bold, telling Verilog that this is the main project it should compile. If yours isn't, *Right-Click -> Set as Top*.
+* If you haven't already generated the wrapper, then the *dac* will be in bold. Remember to set your main design as top once you generate the wrapper.
 
 #### Adding the module
 
-*Right-click* your Block Design, and choose *Add Module*. Select the *axis_red_pitaya_dac* module and press *OK*:
+*Right-click* your Block Design, and choose *Add Module*. Select the *axis_red_pitaya_dac* module and press *OK*. Alternatively you can drag and drop it in from *Sources*.
 
 ![](img_DACBlock.png)
 
@@ -141,7 +142,7 @@ The inputs to this block accept the data to send to the DAC ports:
 
 * *s_axis* accepts data in the *AXI Stream* format. If you click on the '+' to expand *s_axis*, you will see that it has ports which perfectly match the *M_AXIS_DATA* ports on the *DDS Compiler*. If you minimise both of these, you can just draw a single connection between the two and Vivado will automatically match the individual ports.
 * *aclk* takes the Red Pitaya's 125MHz *FCLK*.
-* *ddr_clk* and *locked* connect to the outputs of the *Clocking Wizard*, to take the 250MHz doubled clock frequency.
+* *ddr_clk* and *wrt_clk* connect to the *Clocking Wizard*'s 250MHz *clk_out1*, and *locked* connect to the *locked* output..
 
 The outputs all connect to the DAC pins. The most important one is:
 
@@ -160,7 +161,7 @@ Creating a Hierarchy for the blocks used in signal generation, we arrive at the 
 
 ![](img_FinalBlockDesign.png)
 
-Generate a Bitstream and run this on the Pitaya. If you plug it into an oscilloscope, see sine and cosine waves coming out of the DAC.
+Generate a Bitstream and run this on the Pitaya. If you plug it into an oscilloscope, you should see sine and cosine waves coming out of the analog outputs.
 
 ## What's next?
 
