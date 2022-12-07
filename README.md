@@ -6,6 +6,8 @@ The *Red Pitaya* is a very powerful and versatile device. It combines both a CPU
 
 Check out our [Tutorials](/Tutorials/HOME_Tutorials/), or links for [Further reading](/References).
 
+All designs have been tested on the [STEMLab-14](https://redpitaya.com/stemlab-125-14). The code should still work on other models, in some cases with minor modifications that we'll try our best to mention.
+
 If you have any comments or suggestions, you can reach us at:
 
 [alexander.hodges@oist.jp](mailto:alexander.hodges@oist.jp)
