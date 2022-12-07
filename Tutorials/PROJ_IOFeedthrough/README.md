@@ -2,7 +2,7 @@
 
 In the [sine wave tutorial](/Tutorials/PROJ_IOSignalGeneration) we generated outputs from the fast DACs on the front of the Pitaya. We'll now learn how to use the analog inputs. As an example, we'll make a simple feedthrough that takes in data through the ADC inputs, and passes them straight through to the DAC outputs.
 
-To interface with the analog ports, we'll use slightly modified versions of [Pavel Denim's ADC and DAC cores](https://github.com/pavel-demin/red-pitaya-notes/tree/master/cores). These are described by the Verilog files `axis_red_pitaya_adc.v `  which you can download from this folder `axis_red_pitaya_dac.v`. You can use them just fine as "black boxes", but we recommend eventually checking out the details of how they work, see [here for the DAC](/Tutorials/CORE_DAC_AXIS) and [here for the ADC](/Tutorials/CORE_ADC_AXIS).
+To interface with the analog ports, we'll use slightly modified versions of [Pavel Denim's ADC and DAC cores](https://github.com/pavel-demin/red-pitaya-notes/tree/master/cores). These are described by the Verilog files `axis_red_pitaya_adc.v `  and `axis_red_pitaya_dac.v` which you can download from this folder. You can use them just fine without knowing the code inside, but we recommend eventually checking out the details, see [here for the DAC](/Tutorials/CORE_DAC_AXIS) and [here for the ADC](/Tutorials/CORE_ADC_AXIS).
 
 ## Block design
 
@@ -20,7 +20,7 @@ The wrapper for your block design should be bold. If it isn't, *Right Click -> S
 
 ### Add blocks
 
-We want to add the ADC and DAC blocks to the design. You can either *Right Click* a blank spot of the the Block Design and choose *Add Module*, or more simply drag and drop the modules from *Design Sources* onto the canvas.
+We want to add the ADC and DAC blocks to the design. You can either *Right Click* a blank spot of the the Block Design and choose *Add Module*, simply drag and drop the modules from *Design Sources* onto the canvas.
 
 Connect the input ports on the *adc* to the matching pins from the ADC:
 
@@ -34,13 +34,13 @@ Similarly, connect the output ports on the *dac* to the matching DAC pins:
 
 * For the STEMLab-14, the ADC and DAC have a size of 14 bits. The ADC inputs are padded to 16 bits to be a whole number of bytes, and you can process them with Verilog modules as if they were 16 bit numbers. When you send them to the DAC however the leftmost two bits will be ignored.
 
-Finally, connect the *adc_csn* output port on the *adc* to the *adc_csn_0* output pin.
+Finally, connect the *adc_csn* output port on the *adc* to the *adc_csn_0* output pin (on the right).
 
 ### Clock signal
 
 Previously we used the *FCLK_CLK0* signal to time our design. However since we are using the Analog to Digital Converter, we should use its clock signal to make sure everything is in sync.
 
-As in the [signal generation tutorial](/Tutorials/PROJ_IOSignalGeneration), we need to create a double frequency clock signal for the DAC. As described there, add a *Clocking Wizard* IP, set the input frequency to 125MHz, the output frequency to 250MHz, and disable the *reset* input.
+As in the [signal generation tutorial](/Tutorials/PROJ_IOSignalGeneration), we need to create a double frequency clock signal for the DAC. Add a *Clocking Wizard* IP, set the input frequency to 125MHz, the output frequency to 250MHz, and disable the *reset* input.
 
 * Connect the *adc_clk* output from the ADC to the input *clk_out1* on the *Clocking Wizard*, and the *aclk* port on the dac. 
 

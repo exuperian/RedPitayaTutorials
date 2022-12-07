@@ -1,6 +1,6 @@
 # Controlling the LEDs with AXI GPIO
 
-One of the strengths of the Red Pitaya is that it incorporates both an FPGA, and a full Linux operating system. In this tutorial we'll learn how these two can communicate, allowing you to use the Linux terminal to control the FPGA, and read out data. As a demonstration, we'll control the LED lights on the side of the Pitaya.
+One of the strengths of the Red Pitaya is that it incorporates both an FPGA, and a full Linux operating system. In this tutorial we'll learn how these two can communicate, allowing you to use the Linux terminal to control the FPGA and read out data. As a demonstration, we'll control the LED lights on the side of the Pitaya.
 
 The PS and PL communicate using *AXI*, a protocol used in many systems, not just the Red Pitaya. There are two types of AXI on the Pitaya, a simple *General Purpose Input Output (GPIO)*, and a more complex *High Performance (HP)*. Is *GPIO* we will use in this tutorial. You can find an overview of the details [here](https://www.allaboutcircuits.com/technical-articles/introduction-to-the-advanced-extensible-interface-axi/), but most of the technicalities are taken care of by Vivado. You just need a general understanding to be able to use it, which is what we will focus on. In particular, AXI transfers data by referring to particular places in memory. Thus we will need to learn how computers index their memory, which is done in hexadecimal.
 
@@ -30,7 +30,7 @@ These ports are quite complicated. You'll notice that some of them have a + symb
 
 You transfer data via AXI by specifying specific addresses in memory to read from or write to. Thus we must take a moment to understand how computers refer to different parts of memory, and the hexadecimal number system. We'll give a brief overview here, and there are many good tutorials on the internet.
 
-Computer store information in binary, as sequences of zeros and ones. A single digit is referred to as a *bit*. A single bit is too small to contain anything useful. Therefore rather than working with individual bits, computers work with *bytes*, which are groups of eight bits. For example a byte of information may be
+Computers store information in binary, as sequences of zeros and ones. A single digit is referred to as a *bit*. One bit is too small to contain anything useful. Therefore rather than working with individual bits, computers work with *bytes*, which are groups of eight bits. For example a byte of information may be
 
 `10110010`,
 
@@ -40,13 +40,15 @@ Each byte in a computer's memory is given an *address*. This is just a number as
 
 Data on a computer is stored in ones and zeros, which makes working in binary more convenient for a computer than working in base-ten. However, since binary only contains two digits, even small numbers can require long sequences of binary. For example, the number 56 is the sequence 111000. Since computers contain billions or trillions of bytes, each of which needs its own address, it would be impractical to write out memory addresses in binary.
 
-Instead, memory addresses are written in *hexadecimal*, or base sixteen. Since sixteen is a power of two, this number system works very naturally with binary. But the extra digits let us practically address billions of digits. If our computer has one gigabyte of memory, which is a billion ($10^9$) bytes, referring to each byte would require
+Instead, memory addresses are written in *hexadecimal*, or base sixteen. Since sixteen is a power of two, this number system works very naturally with binary. But the extra digits let us practically address billions of bytes. If our computer has one gigabyte of memory, which is a billion ($10^9$) bytes, referring to each byte would require
 
 * $\log(10^9)/\log(2)\approx 30$ digits of binary,
 * $\log(10^9)/\log(10)=9$ digits of base-ten,
 * $\log(10^9)/\log(16)\approx 8$ digits of hexadecimal.
 
-With a terabyte, base ten would take twelve digits while hexadecimal would require ten. So how does hexadecimal work? Binary has two digits:
+With a terabyte, base ten would take twelve digits while hexadecimal would require ten. 
+
+So how does hexadecimal work? Binary has two digits:
 
 `0`, `1`
 

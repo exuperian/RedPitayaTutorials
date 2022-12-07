@@ -44,7 +44,7 @@ input  wire [ADC_DATA_WIDTH-1:0]   adc_dat_a,
 input  wire [ADC_DATA_WIDTH-1:0]   adc_dat_b,
 ```
 
- There is also an additional signal `adc_csn` which X.
+ There is also an additional output `adc_csn`. If we set this to 1, it sends a signal to the ADC telling it to turn on stabilisation for better performance.
 
 ```verilog
 output wire                        adc_csn,
