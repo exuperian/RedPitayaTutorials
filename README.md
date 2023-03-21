@@ -6,7 +6,7 @@ The *Red Pitaya* is a very powerful and versatile device. It combines both a CPU
 
 Check out our [Tutorials](/Tutorials/HOME_Tutorials/), or links for [Further reading](/References).
 
-All designs have been tested on the [STEMLab-14](https://redpitaya.com/stemlab-125-14). The code should still work on other models, in some cases with minor modifications that we'll try our best to mention. Note that Vivado, the tool we use to program the FPGA, only supports Windows and Linux. There are some articles online on setting it up on a Mac using a virtual machine, but we haven't tested this.
+All designs have been tested on the [STEMLab-14](https://redpitaya.com/stemlab-125-14). The code should still work on other models, in some cases with minor modifications that we'll try our best to mention. Note that Vivado, the tool we use to program the FPGA, only supports Windows and Linux. There are some articles online about running Vivado on a Mac using a virtual machine, but we haven't tested this.
 
 If you have any comments or suggestions, you can reach us at:
 
@@ -14,4 +14,4 @@ If you have any comments or suggestions, you can reach us at:
 
 [ruvindha.lecamwasam@oist.jp](mailto:ruvindha.lecamwasam@oist.jp)
 
-*It is possible, though unlikely, for improperly-written FPGA code to [permanently damage your device](https://electronics.stackexchange.com/q/293915/314171). We have tried our best to make sure everything is correct, but we don't take responsibility for any damage that may occur.*
+*It is possible, though highly unlikely, for improperly-written FPGA code to [permanently damage your device](https://electronics.stackexchange.com/q/293915/314171). We have tried our best to make sure everything is correct, but we don't take responsibility for any damage that may occur.*
