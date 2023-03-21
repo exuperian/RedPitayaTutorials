@@ -1,6 +1,6 @@
 # Setting up a Red Pitaya
 
-In this post we'll go through the basic setup of a new Red Pitaya.
+In this tutorial we'll go through the basic setup of a new Red Pitaya.
 
 ## What you need out of the box
 
@@ -27,9 +27,9 @@ We will now use two of the ports on the rear:
 
 ![Rear ports on the Red Pitaya. We have circled the small micro USB power port on one end of the rear, and large square ethernet data port on the other](img_Ports.jpg)
 
-* The board has two micro USB ports. The outer one is labelled 'PWR', and is used to supply power. The inner one, labeled 'CON', [can be used to transfer data with the computer](https://redpitaya.readthedocs.io/en/latest/developerGuide/software/console/console/console.html), but we won't do that gere. The official recommendation is to supply power using the included power supply. You can instead connect the PWR port to your computer with a micro USB cable, and it will also transfer power (but not data) to the board. We've done this many times without problem, but the company warns that if the port doesn't provide enough power the Pitaya could behave incorrectly. A similar warning applies if you use a different power supply.
+* The board has two micro USB ports. The outer one is labelled 'PWR', and is used to supply power. The inner one, labelled 'CON', [can be used to transfer data with the computer](https://redpitaya.readthedocs.io/en/latest/developerGuide/software/console/console/console.html), though we won't be doing that. The official recommendation is to supply power using the included power supply. You can instead connect the PWR port to your computer with a micro USB cable, and it will also transfer power (but not data) to the board. We've done this many times without problem, but the company warns that if the port doesn't provide enough power the Pitaya could behave incorrectly. A similar warning applies if you use a different power supply.
 
-* The rectangular port is ethernet, which exchanges data with the computer. You can connect this directly to your computer if you have a spare ethernet port, and we've also used ethernet to USB adaptors without issues. **Note that if you are on Linux, you have to set the Pitaya's network connection to 'Share to other computers' as mentioned in [the documentation](https://redpitaya.readthedocs.io/en/latest/quickStart/connect/connect.html).** Another option is to connect this to an ethernet port on your router. This lets you access it from any other device on the network &mdash; even wireless ones like a phone or laptop. 
+* The rectangular port is ethernet, which exchanges data with the computer. You can connect this directly to your computer if you have a spare ethernet port, and we've also used ethernet to USB adaptors without issues. **Note that if you are on Linux, you have to set the Pitaya's network connection to 'Share to other computers' as mentioned in [the documentation](https://redpitaya.readthedocs.io/en/latest/quickStart/connect/connect.html).** Another option is to connect this to an ethernet port on your router. This lets you access the Pitaya from any other device on the network &mdash; even wireless ones like a phone or laptop. 
 
 When you plug these cables in, LED lights will appear:
 * The LED lights on the side turn on as soon as power is connected. 
@@ -58,4 +58,4 @@ Hopefully you can now access your Red Pitaya, and control it via the web browser
 * updating the SD card beforehand, and 
 * changing the network settings if you are using Linux.
 
-Try checking out some of the [Tutorials](/Tutorials).
+Now check out some of the other [Tutorials](/Tutorials/HOME_Tutorials/)!
