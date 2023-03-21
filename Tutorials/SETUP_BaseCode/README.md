@@ -28,7 +28,7 @@ This should leave you with a blank design to work on.
 
 ### 2. Create base setup
 
-We need to give Vivado a list of the input/output ports on the Pitaya, tell it about the CPU, and how all these are interconnected. All this information is contained in the *rp_base_setup.tcl* file.  In the Tcl console, navigate to the folder containing the script (see[the tutorial on running Tcl scripts](/Tutorials/TCL_RunningTCL/README.md) for how to do this) run 
+We need to give Vivado a list of the input/output ports on the Pitaya, tell it about the CPU, and how all these are interconnected. All this information is contained in the *rp_base_setup.tcl* file.  In the Tcl console, navigate to the folder containing the script (see [the tutorial on running Tcl scripts](/Tutorials/TCL_RunningTCL/README.md) for how to do this), and run 
 
 ```source rp_base_setup.tcl```
 
@@ -46,7 +46,7 @@ Let's run through what the these components are:
 
 Now we'll give Vivado the last information it needs about the Red Pitaya.
 
-First, right-click the *ZYNQ7 Processing System* and select *Customize Block*. Click on *Import XPS Settings* at the top, press the '...' button, and choose the *red_pitaya.xml* file. Press the OK button twice to get back to the design, and you should see some extra ports appear on the *ZYNQ7* block:
+First, right-click the *ZYNQ7 Processing System* and select *Customize Block*. Click on *Import XPS Settings* at the top, press the '...' button, and choose the *red_pitaya.xml* file. Press *OK* and then *OK* again to get back to the design, and you should see some extra ports appear on the *ZYNQ7* block:
 
 ![Basic Red Pitaya setup](img_BaseSetup.png)
 
@@ -60,9 +60,9 @@ You now have a Red Pitaya set up in Vivado! The next step is to play around with
 
 When we created the project, we ticked *do not specify sources at this time*. By *sources* Vivado means the constraints files which we added later, as well as custom code blocks that you've written. It makes no difference whether you add these all at the start, or later on.
 
-The part number was xc7z010clg400-1. You don't have to know what the letters mean, but if you're curious:
+The part number was *xc7z010clg400-1*. You don't have to know what the letters mean, but if you're curious:
 
-* the underlying chip is an xc7z010,
+* the underlying chip is an *xc7z010*,
 
-* in a cfg400 package, 
-* binned into a -1 speed grade (the slowest option, -3 is the fastest).
+* in a *cfg400* package, 
+* binned into a *-1* speed grade (the slowest option, *-3* is the fastest).

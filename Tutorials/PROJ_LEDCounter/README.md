@@ -42,11 +42,11 @@ This lets us count from zero to one. To go beyond this we add an extra digit and
 
 Since we only have two digits to play with, at this step we have to add a third digit. The process then continues.
 
-Let's look at how you count in Binary from zero to eight, adding some leading zeros to make our numbers four digits long:
+Let's look at how you count in binary from zero to eight, adding some leading zeros to make our numbers four digits long:
 
-```0000, 0001, 0002, 0003, 0004, 0005, 0006, 0007, 0008```
+Base 10: ```0000, 0001, 0002, 0003, 0004, 0005, 0006, 0007, 0008```
 
-```0000, 0001, 0010, 0011, 0100, 0101, 0110, 0111, 1000```
+Binary: ```0000, 0001, 0010, 0011, 0100, 0101, 0110, 0111, 1000```
 
 The bottom row of four 0/1 digits is a *four-bit binary counter*. We could imagine them as four LEDs which are on/off to represent the digits 0/1. 
 
@@ -63,7 +63,7 @@ So if a binary counter is ticking forward at some rate $r\mathrm{Hz}$, the $n$ t
 
 # Procedure
 
-The *FCLK_CLK0* output on the *ZYNQ7* provides a binary signal which oscillates between 0 and 1 at a rate of 125MHz. We will feed the clock to a binary counter, take the leftmost digits, and use them to switch the LEDs on and off.
+The *FCLK_CLK0* output on the *ZYNQ7 Processing System* provides a binary signal which oscillates between 0 and 1 at a rate of 125MHz. We will feed the clock to a binary counter, take the leftmost digits, and use them to switch the LEDs on and off.
 
 ## 0. Base setup
 

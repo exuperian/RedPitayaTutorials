@@ -14,11 +14,11 @@ We first need to convert our block design into something that can be compiled in
 
 ![Right clicking the design](img_GenerateOutputProducts.png)
 
-Leave everything as default. You should see *Synthesis Options* is set to *Out of context per IP*. This means that if you later change the design and recompile, Vivado will be clever and only compile the bits you changed, saving time. When it finishes you'll get a dialog box about "Out-of-context module runs", just click *OK*:
+Leave everything as default. You should see *Synthesis Options* is set to *Out of context per IP*. This means that if you later change the design and recompile, Vivado will be clever and only compile the bits you changed, saving time. Press *Generate*. When it finishes you'll get a dialog box about "Out-of-context module runs", just click *OK*:
 
 ![Dialog box saying Out-of-context module runs were launched for generating output products.](img_OOCDialogBox.png)
 
-Now right-click again and choose *Generate HDL Wrapper*:
+Now right-click again and choose *Create HDL Wrapper*:
 
 ![Right clicking the design](img_CreateHDLWrapper.png)
 
@@ -70,4 +70,5 @@ where again the name of your `.bit` file may differ. This will make the Pitaya e
 
 You now know how to compile and run FPGA code for the Red Pitaya! Check out some of our [tutorials](/Tutorials/HOME_Tutorials).
 
-Remember that if you tinker with your project and re-compile, you don't have to worry about step 1. The HDL wrapper will automatically update, so all you need to do is generate the bitstream.
+Remember that if you change with your project, you don't have to worry about generating the output products and wrapper again. These should automatically update, so all you need to do is generate the bitstream.
+

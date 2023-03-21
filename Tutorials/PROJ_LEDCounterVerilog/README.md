@@ -28,7 +28,7 @@ If you double click the `.v` file, it should open in a new tab for editing. At t
 `timescale 1ns / 1ps
 ```
 
-This sets the natural timescale for the code. The `1ns` tells Verilog that if we say *pause for two units of time*, we mean *pause for 1ns*. The second `1ps` gives the desired precision. If we say *pause for 0.3 units of time*, then it will pause for 0.3 nanoseconds, rounded to the nearest picosecond. [See here for more details](https://www.chipverify.com/verilog/verilog-timescale).
+This sets the natural timescale for the code. The `1ns` tells Verilog that if we say "*pause for two units of time*", we mean "*pause for 1ns*". The second `1ps` gives the desired precision. If we say "*pause for 0.3 units of time*", then it will pause for 0.3 nanoseconds, rounded to the nearest picosecond. [See here for more details](https://www.chipverify.com/verilog/verilog-timescale).
 
 Next there will be several comments, denoted by `//`. At the bottom we have our Verilog module:
 
@@ -60,7 +60,7 @@ module binarycounter(
 endmodule
 ```
 
-* The names of our inputs and outputs `clk` and `count` are in principle arbitrary, you can choose whatever names you like.
+* The names of our inputs and outputs `clk` and `count` are arbitrary, you can choose whatever names you like.
   * However, Vivado will recognise any variable with `clk`  in the name as a clock signal. This doesn't usually change anything, but it is good practice.
 
 * By default inputs are a single bit. So `input clk` means that there will be one input `clk` which is just a single bit.
@@ -94,7 +94,7 @@ end
 
 - `always @ (clk)` means "whenever `clk` changes, do the following"
 - `always @ (posedge clk)` means "whenever `clk` changes from `0` to `1`, do the following". The code will be executed when there is a *positive edge* on `clk`, but not when `clk` changes from `1` to `0`.
-- `always` blocks are contained within a `begin` and `end`.
+- The contents of an `always` blocks are contained within a `begin` and `end`.
 - The body increments the count by one. When the value of the `count32` grows larger than what can be represented in 32 bits, it will wrap around back to zero.
 
 Finally, we need to send the last eight bits of `count32` to the output:
