@@ -40,11 +40,7 @@ $$y_j=\sum_{k=0}^n\frac{x_{j-k}}{n}.$$
 
 As we can see, the filter is just a series of multiplications and additions, which can be easily implemented by the digital logic on the FPGA.
 
-Let's write this a general way that can be extended to describe many filters. Define a function
-
-$$h_k=\begin{cases}1/n & 0\le k<n, \\ 0 & \mathrm{otherwise}.\end{cases}$$
-
-Then we can write the filter as:
+Let's write this a general way that can be extended to describe many filters. Define $h_j$ to be $1/n$ when $0\le k\le n$, and $0$ for $k>n$. Then we can write the filter as:
 
 $$y_j=\sum_{k=0}^{\infty}h_kx_{j-k}.$$
 
@@ -67,9 +63,9 @@ Thinking back to the moving average, the kernel was a rectangle function, whose 
 
 The sinc function, when used to multiply the Fourier transform of our input signal $x_j$, will keep frequencies closest to the origin. The moving average does indeed act as a low-pass filter. However, we can also see from this that it isn't perfect. The sinc has ripples, so not all frequencies are evenly suppressed. Moreover it isn't very flat near the origin, and drops off very slowly. If our signal is comprised of multiple low frequencies, these will also be suppressed by different amounts, distorting our measurement. 
 
-In fact, we want the Fourier transform of our kernel to be the rect function, which will keep all frequencies below some point and suppress all others, without any distortion. Thus our kernel $h_j$ should be a sinc function! However in practice since $h_j$ can only be non-zero for finitely many $j$, we will have to truncate the sinc function at some point, which will corrupt its Fourier transform away from a perfect rectangle.
+In fact, we want the Fourier transform of our kernel to be the rect function, which will keep all frequencies below some point and suppress all others, without any distortion. Thus our kernel $h_j$ should be a sinc function! However in practice since $h_j$ can only be non-zero for finitely many $j$, we will have to truncate the $\mathrm{sinc}$ function at some point, which will corrupt its Fourier transform away from a perfect rectangle.
 
-Choosing kernels is a complicated affair. Depending on your requirements, you may care about how sharply the filter falls to zero, how flat it is, how many coefficients your FPGA hardware will let you have in your $h_j$, and many more things besides. For simple applications however you don't have to worry too much. There are many pre-made calculators both online and in programming languages like Python and MATLAB where you can just say that you want a low/high/band-pass filter and what the cut-offs should be, and they will give you a kernel $h_k$ that is good enough. 
+Choosing kernels can be a complicated affair. Depending on your requirements, you may care about how sharply the filter falls to zero, how flat it is, how many coefficients your FPGA hardware will let you have in your $h_j$, and many more things besides. For simple applications however you don't have to worry too much. There are many pre-made calculators both online and in programming languages like Python and MATLAB where you can just say that you want a low/high/band-pass filter and what the cut-offs should be, and they will give you a kernel $h_k$ that is good enough. 
 
 ## Block design
 
