@@ -1,6 +1,6 @@
 # Red Pitaya Tutorials
 
-Alex Hodges & Ruvi Lecamwasam
+Alex Hodges, Daehee Kim, & Ruvi Lecamwasam
 
 The *Red Pitaya* is a very powerful and versatile device. It combines both a CPU and FPGA, together with fast analog to digital converters, making it great for doing feedback and control. There is however a steep learning curve to programing the FPGA. We've written some material to ease this process, which we hope can take you from zero FPGA background to implementing basic feedback.
 
@@ -11,6 +11,8 @@ All designs have been tested on the [STEMLab-14](https://redpitaya.com/stemlab-1
 If you have any comments or suggestions, you can reach us at:
 
 [alexander.hodges@oist.jp](mailto:alexander.hodges@oist.jp)
+
+[daehee.kim@oist.jp](mailto:daehee.kim@oist.jp )
 
 [ruvindha.lecamwasam@oist.jp](mailto:ruvindha.lecamwasam@oist.jp)
 

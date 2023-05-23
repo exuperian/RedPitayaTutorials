@@ -39,6 +39,14 @@ Learn how to use the fast analog input and output ports. You'll need an oscillos
 * [Generating a sine wave](/Tutorials/PROJ_IOSignalGeneration)
 * [Feeding an input signal through to the output](/Tutorials/PROJ_IOFeedthrough)
 
+### Digital filtering
+
+The Red Pitaya can be used as a programmable digital filter. You'll need an oscilloscope and signal generator to test these out, and to have gone through the *Input and output* section.
+
+* Basic FIR filter
+* Reducing the sample rate - decimation
+* Low-frequency filtering
+
 ## Additional information
 
 ### FPGA Programming
