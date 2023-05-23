@@ -4,7 +4,7 @@ In this tutorial we'll learn how to implement a simple digital filter on the Red
 
 FIR filters work by summing linear combinations of the current and previous values of the signal. For this to work, they need to hold in memory the past several periods. Since the Red Pitaya samples signals at 125 MHz, this means that a simple FIR filter will only be able to operate at megahertz frequencies, since anything slower would require storing and then performing mathematical operations on vast amounts of data. To operate at lower frequencies it is necessary to first downsample the data, which we cover in [ADD THIS]().
 
-Before going through this tutorial, you should first go through [Feeding an input signal through to the output](/Tutorials/PROJ_IOFeedthrough). To test out your filter you'll need an oscilloscope and signal generator.
+We'll give only a brief introduction to FIR filters. Before going through this tutorial, you should first go through [Feeding an input signal through to the output](/Tutorials/PROJ_IOFeedthrough). To test out your filter you'll need an oscilloscope and signal generator.
 
 ## Preliminaries
 
