@@ -47,7 +47,7 @@ $$y_j=\sum_{k=0}^{\infty}h_kx_{j-k}.$$
 This is the general formula for any Finite Impulse Response filter. Let's digest it a bit:
 
 * The function $h_k$ is called the *kernel* of the filter, and expresses how the filtered output at a time $j$ depends on the value of the signal at time $j-k$. 
-* For $k$ larger than some cutoff ($n$ in the case of the moving average) all $h_k$ should be zero. The FPGA can only hold a finite number of samples in memory.
+* For $k$ larger than some cut-off ($n$ in the case of the moving average) all $h_k$ should be zero. The FPGA can only hold a finite number of samples in memory.
 * $h_k$ is also the *impulse response* of the filter. If $x_0=1$ and all other $x_{j>0}$ are zero, then the filter output will be $y_k=h_k$. Since $h_{k}=0$ when $k>n$, the impulse response will always end after finite time - the filter has Finite Impulse Response.
 * The values of $h_k$ are also called the *coefficients* of the FIR filter.
 
