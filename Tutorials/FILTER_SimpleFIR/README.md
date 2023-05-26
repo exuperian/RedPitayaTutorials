@@ -69,7 +69,7 @@ Choosing kernels can be a complicated affair. Depending on your requirements, yo
 
 ## Block design
 
-d
+
 
 ## What's next?
 
