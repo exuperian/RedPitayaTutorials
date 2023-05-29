@@ -63,13 +63,35 @@ Thinking back to the moving average, the kernel was a rectangle function, whose 
 
 The sinc function, when used to multiply the Fourier transform of our input signal $x_j$, will keep frequencies closest to the origin. The moving average does indeed act as a low-pass filter. However, we can also see from this that it isn't perfect. The sinc has ripples, so not all frequencies are evenly suppressed. Moreover it isn't very flat near the origin, and drops off very slowly. If our signal is comprised of multiple low frequencies, these will also be suppressed by different amounts, distorting our measurement. 
 
-In fact, we want the Fourier transform of our kernel to be the rect function, which will keep all frequencies below some point and suppress all others, without any distortion. Thus our kernel $h_j$ should be a sinc function! However in practice since $h_j$ can only be non-zero for finitely many $j$, we will have to truncate the $\mathrm{sinc}$ function at some point, which will corrupt its Fourier transform away from a perfect rectangle.
+In fact, we want the Fourier transform of our kernel to be the rect function, which will keep all frequencies below some point and suppress all others, without any distortion. Thus our kernel $h_j$ should be a sinc function! However in practice since $h_j$ can only be non-zero for finitely many $j$, we will have to truncate the $\mathrm{sinc}$ function at some point, which will corrupt its Fourier transform away from a perfect rectangle. We often choose something other than a 
 
 Choosing kernels can be a complicated affair. Depending on your requirements, you may care about how sharply the filter falls to zero, how flat it is, how many coefficients your FPGA hardware will let you have in your $h_j$, and many more things besides. For simple applications however you don't have to worry too much. There are many pre-made calculators both online and in programming languages like Python and MATLAB where you can just say that you want a low/high/band-pass filter and what the cut-offs should be, and they will give you a kernel $h_k$ that is good enough. 
 
 ## Block design
 
+Begin by creating the block design from [splitting and joining AXIS data](/Tutorials/PROJ_IOSplittingJoining). Make sure you remember to *Generate Output Products* and *Create HDL Wrapper*.
 
+![The block design from the input signal feedthrough tutorial](img_FeedthroughSplitJoined.png)
+
+### Design an FIR Filter
+
+We need to choose a kernel for our filter, represented by a set of coefficients. There are many programs that we can use to to calculate these. MATLAB provides a sophisticated interface which we'll eventually get to using, but for now let's use the website [fiiir.com](https://fiiir.com/).
+
+* The first thing is to decide what type of filter to use. Let's use a low-pass filter, which allows only frequencies below a given cutoff. 
+
+* Next the filter needs to know the sampling rate, which is 125MHz. 
+
+* We now need to choose the cutoff frequency. Since our sample rate is megahertz, our cutoff has to be within the megahertz range. Let's set it to 10MHz.
+
+* Then there's the transition bandwidth. The narrower this is the more coefficients the filter needs. Let's go with 1MHz.
+
+* Finally there's the type of window. You can look into this for more details, for now leave it as default.
+
+Press *Compute Filter*. You might notice that the transition bandwidth changes. This is because this depends on what filter can be computed.
+
+Scrolling down, you'll under *Filter code* a list of numbers. These give you the filter coefficients, the values $h_k$ for the filter. Right-click and copy.
+
+### Add the FIR compiler block
 
 ## What's next?
 

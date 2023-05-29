@@ -38,6 +38,7 @@ Learn how to use the fast analog input and output ports. You'll need an oscillos
 
 * [Generating a sine wave](/Tutorials/PROJ_IOSignalGeneration)
 * [Feeding an input signal through to the output](/Tutorials/PROJ_IOFeedthrough)
+* [Splitting and joining signals](/Tutorials/PROJ_IOSplittingJoining)
 
 ### Digital filtering
 
