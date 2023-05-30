@@ -14,7 +14,7 @@ module split_from_dac #
 (
   // Inputs from ADC
   (* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)
-  input wire                        adc_clk,
+  input wire                        aclk,
   (* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)
   input wire [AXIS_TDATA_WIDTH-1:0] s_axis_tdata,
   input wire                        s_axis_tvalid,
@@ -30,18 +30,18 @@ module split_from_dac #
   reg  [PADDED_DATA_WIDTH-1:0] int_data_a_reg;
   reg  [PADDED_DATA_WIDTH-1:0] int_data_b_reg;
 
-  always @(posedge adc_clk)
+  always @(posedge aclk)
   begin
-    if(m_axis_tvalid)
+    if(s_axis_tvalid)
     begin
-        int_data_a_reg <= m_axis_tdata[15:0];
-        int_data_b_reg <= m_axis_tdata[31:16];
+        int_data_a_reg <= s_axis_tdata[15:0];
+        int_data_b_reg <= s_axis_tdata[31:16];
     end
   end
 
   assign o_data_a = int_data_a_reg;
   assign o_data_b = int_data_b_reg;
 
-  assign t_valid  = m_axis_tvalid;
+  assign t_valid  = s_axis_tvalid;
 
 endmodule

@@ -14,7 +14,7 @@ module join_to_adc #
 (
   //Split data input
   (* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)
-  input wire                        adc_clk,
+  input wire                        aclk,
   (* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)  
   input wire [PADDED_DATA_WIDTH-1:0] o_data_a,
   (* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)
@@ -29,7 +29,7 @@ module join_to_adc #
 
     reg  [AXIS_TDATA_WIDTH-1:0] int_tdata_reg;
     
-    always @(posedge adc_clk)
+    always @(posedge aclk)
     begin
         if(t_valid)
         begin

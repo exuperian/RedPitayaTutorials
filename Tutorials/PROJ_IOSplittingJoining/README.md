@@ -58,6 +58,8 @@ Then drag the *m_axis* port on *join_to_adc* to the *s_axis* port on *axis_red_p
 
 The completed design should then look like:![](img_FeedthroughSplitJoined.png)
 
+Since we are just splitting and then recombining the input, this should behave just like a passthrough. Compile it and make sure it works! The fun will happen when we start filtering one of the channels.
+
 ## What's next?
 
 - 
