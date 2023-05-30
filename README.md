@@ -16,4 +16,6 @@ If you have any comments or suggestions, you can reach us at:
 
 [ruvindha.lecamwasam@oist.jp](mailto:ruvindha.lecamwasam@oist.jp)
 
+These tutorials were started while all authors were members of the [Quantum Machines Unit at OIST](https://groups.oist.jp/qmech).
+
 *It is possible, though highly unlikely, for improperly-written FPGA code to [permanently damage your device](https://electronics.stackexchange.com/q/293915/314171). We have tried our best to make sure everything is correct, but we don't take responsibility for any damage that may occur.*

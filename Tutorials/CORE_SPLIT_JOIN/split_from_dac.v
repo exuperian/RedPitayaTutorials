@@ -3,7 +3,6 @@
 //into two 16 bit signals.
 //
 //See github.com/exuperian/RedPitayaTutorials
-
 `timescale 1 ns / 1 ps
 
 module split_from_dac #
@@ -16,15 +15,14 @@ module split_from_dac #
   (* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)
   input wire                        adc_clk,
   (* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)
-  input wire [AXIS_TDATA_WIDTH-1:0] s_axis_tdata,
-  input wire                        s_axis_tvalid,
+  input wire [AXIS_TDATA_WIDTH-1:0] m_axis_tdata,
+  input wire                        m_axis_tvalid,
   
   //Split data output
   (* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)  
   output wire [PADDED_DATA_WIDTH-1:0] o_data_a,
   (* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)
-  output wire [PADDED_DATA_WIDTH-1:0] o_data_b,
-  output wire t_valid
+  output wire [PADDED_DATA_WIDTH-1:0] o_data_b
 );
 
   reg  [PADDED_DATA_WIDTH-1:0] int_data_a_reg;
@@ -41,7 +39,5 @@ module split_from_dac #
 
   assign o_data_a = int_data_a_reg;
   assign o_data_b = int_data_b_reg;
-
-  assign t_valid  = m_axis_tvalid;
 
 endmodule

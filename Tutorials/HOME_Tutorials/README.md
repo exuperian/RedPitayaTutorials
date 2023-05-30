@@ -56,9 +56,10 @@ The Red Pitaya can be used as a programmable digital filter for frequencies at m
 
 ### Cores
 
-* [ODDR for Dual Data Rate output](/Tutorials/CORE_ODDR)
 * [DAC AXIS Stream](/Tutorials/CORE_DAC_AXIS)
 * [ADC AXIS Stream](/Tutorials/CORE_ADC_AXIS)
+* [Splitting and Joining AXIS Streams](/Tutorials/CORE_SPLIT_JOIN)
+* [ODDR for Dual Data Rate output](/Tutorials/CORE_ODDR)
 
 ### Vivado
 
