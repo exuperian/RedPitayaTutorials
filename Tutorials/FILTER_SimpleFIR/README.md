@@ -16,6 +16,8 @@ One way to filter an electrical signal is to design an electrical circuit out of
 
 One of the great things about digital filtering is that it is programmable. If you want to change the frequency ranges of the filter, you don't need to go out and buy different capacitors, you can just change some code in Vivado.
 
+A filter depends very heavily on the sampling rate of the data $f_s$. The fastest frequency that is available is the Nyquist frequency, given by $f_s/2$. 
+
 ### FIR filters
 
 The simplest kind of digital filter is called *Finite Impulse Response (FIR)*. These are so-called because if you turn off the input signal, the filter output will eventually go to zero. In this section we'll give a brief introduction, for more see  based on chapter 5 of [Understanding Digital Signal Processing by Richard Lyons](https://www.amazon.com/Understanding-Digital-Signal-Processing-3rd/dp/0137027419), if you want more details take a look at the textbook.
@@ -65,7 +67,15 @@ The sinc function, when used to multiply the Fourier transform of our input sign
 
 In fact, we want the Fourier transform of our kernel to be the rect function, which will keep all frequencies below some point and suppress all others, without any distortion. Thus our kernel $h_j$ should be a sinc function! However in practice since $h_j$ can only be non-zero for finitely many $j$, we will have to truncate the $\mathrm{sinc}$ function at some point, which will corrupt its Fourier transform away from a perfect rectangle. We often choose something other than a 
 
-Choosing kernels can be a complicated affair. Depending on your requirements, you may care about how sharply the filter falls to zero, how flat it is, how many coefficients your FPGA hardware will let you have in your $h_j$, and many more things besides. For simple applications however you don't have to worry too much. There are many pre-made calculators both online and in programming languages like Python and MATLAB where you can just say that you want a low/high/band-pass filter and what the cut-offs should be, and they will give you a kernel $h_k$ that is good enough. 
+Choosing kernels can be a complicated affair. Depending on your requirements, you may care about how sharply the filter falls to zero, how flat it is, how many coefficients your FPGA hardware will let you have in your $h_j$, and many more things besides. For simple applications however you don't have to worry too much. There are many pre-made calculators both online and in programming languages like Python and MATLAB where you can just say that you want a low/high/band-pass filter and what the cut-offs should be, and they will give you a kernel $h_k$ that is good enough.
+
+### Truncating LSBs
+
+The filter works by adding together linear combinations of values of the input at different times. Depending on the filter coefficients you choose, it is possible for the output to thus be longer than a 16 bit number.
+
+The filter works by adding together linear combinations of values of the input at different times. Depending on the filter coefficients you choose, it is possible for the output to thus be longer than a 16 bit number. The *Output Rounding Mode* tells Vivado how to handle these extra bits. 
+
+We only care about the lowest 14 bits. If the signal gets bigger the DAC will be fed gibberish. But this shouldn't be a problem for filters with a gain of 1.
 
 ## Block design
 
@@ -77,21 +87,75 @@ Begin by creating the block design from [splitting and joining AXIS data](/Tutor
 
 We need to choose a kernel for our filter, represented by a set of coefficients. There are many programs that we can use to to calculate these. MATLAB provides a sophisticated interface which we'll eventually get to using, but for now let's use the website [fiiir.com](https://fiiir.com/).
 
-* The first thing is to decide what type of filter to use. Let's use a low-pass filter, which allows only frequencies below a given cutoff. 
+* The first thing is to decide what type of filter to use. Let's use a bandpass filter, which allows only frequencies within a certain range. 
+* Next the filter needs to know the sampling rate, which is 125MHz, or 125000000 Hz. 
+* We now need to choose the frequencies for the bandpass. Since our sample rate is megahertz, these all have to be within the megahertz range. 
+  * The cutoff frequency $f_L$ is the low end of the bandpass, let's take 2MHz=2000000Hz.
 
-* Next the filter needs to know the sampling rate, which is 125MHz. 
+  * The transition bandwidth $b_L$ is how wide the filter is after the cutoff. We'll set this to 1MHz=1000000Hz, though the calculator may change this.
 
-* We now need to choose the cutoff frequency. Since our sample rate is megahertz, our cutoff has to be within the megahertz range. Let's set it to 10MHz.
+  * The cutoff frequency $f_H$ is the high end, lets take 4MHz=4000000 Hz.
 
-* Then there's the transition bandwidth. The narrower this is the more coefficients the filter needs. Let's go with 1MHz.
+  * We again must choose a transition bandwidth $b_H$, let's make this 1MHz=1000000Hz. Again this may be changed by the calculator.
 
 * Finally there's the type of window. You can look into this for more details, for now leave it as default.
 
 Press *Compute Filter*. You might notice that the transition bandwidth changes. This is because this depends on what filter can be computed.
 
-Scrolling down, you'll under *Filter code* a list of numbers. These give you the filter coefficients, the values $h_k$ for the filter. Right-click and copy.
+Below you'll see a graph of the Filter Characteristics. You should notice the frequency response has a gain of 1 between 2 and 4MHz, and 0 otherwise. The impulse response will look something like a deformed sinc.
 
-### Add the FIR compiler block
+Scrolling down, you'll under *Filter code* a list of numbers. These give you the filter coefficients, the values $h_k$ for the filter. Vivado can take up to 1024 of these, so hopefully there's less than that. Right-click and copy these.
+
+### FIR compiler block
+
+#### Input coefficients
+
+The Vivado block that implements an FIR filter is called the *FIR Compiler*. Add one of these to the design. Double click to edit this. Paste the filter coefficients into the *Coefficient Vector* box. On the left, click on the *Freq. Response* tab, and it will visualise the gain of the filter.
+
+![](img_FIROptions.png)
+
+* The red *ideal* line shows the response if the filter coefficients were implemented exactly. In reality however we must represent these decimals as a binary number string in FPGA, a process called *quantization*. The performance of the filter after quantization is shown by the blue *Quantized* curve.
+* The units of the vertical axis are in *Normalized Frequency*. On this, $1.0$ represents the Nyquist frequency $f_s/2=125\mathrm{MHz}/2=62.5\mathrm{MHz}$. The low-frequency cutoff here is $0.037$, which corresponds to $0.037\times62.5\mathrm{MHz}\approx 2.5\mathrm{MHz}$.
+
+#### Implementation
+
+Now click on the *Implementation* tab. Under *Coefficient Options* tick *Brest Precision Fraction Length*, which means Vivado will figure out how many bits to use to represent the FIR coefficients when doing its internal maths.
+
+Next we need to think about how big the input and outputs of the filter are. 
+
+The inputs to the filter should be a 16 bit vector. Recall that this is a 14 bit input from the DAC, with two padding bits. This means that *Input Data Width* should be 16, which is the default.
+
+The filter works by adding together linear combinations of values of the input at different times. Depending on the filter coefficients you choose, it is possible for the output to thus be longer than a 16 bit number. The *Output Rounding Mode* tells Vivado how to handle these extra bits. By default this is set to *Full Precision*, which means Vivado will automatically choose a very large output size. However, we know that our filter coefficients have a gain of 1, which means that the output should never be larger than the input data size. Thus set the *Output Rounding Mode* to *Truncate LSBs*, which will truncate the least significant bits to a fixed size, and set the *Output Width* to 16.
+
+Leave all other settings as default, and click *OK*.
+
+![](img_FIRImplementation.png)
+
+### Connect blocks
+
+First, disconnect the three connections between the *split_from_dac* to *join_to_adc* (*o_data_a[15:0]*, *o_data_b[15:0]*, and *t_valid*). We want to filter the data before it is sent to the ADC. Expand both *S_AXIS_DATA* and *M_AXIS_DATA* on the *FIR*, since we'll be connecting the individual wires separately.
+
+Let's do the inputs to the FIR compiler first. Expand *s_axis_data* input on the FIR compiler. We can see that this block takes three input signals, which we will connect to outputs on *split_from_dac*.
+
+* *s_axis_data_tdata[15:0]*, the input data to be filtered. Connect this to *o_data_a[15:0]* from *split_from_dac*.
+* *s_axis_data_tvalid*, a signal which tells it whether the time data is valid or not. Connect this to *t_valid* from *split_from_dac*.
+* *aclk*, the clock signal. Connect this to *adc_clk* from the DAC *axis_red_pitaya_adc*.
+
+There is also a port *s_axis_ready*, which is an output. This tells whatever block is sending the signal whether or not the filter is ready to receive it. We won't bother with this, and will just send data regardless. This should look like below:
+
+![](img_FIRInput.png)
+
+Now let's connect the filter outputs to *join_to_adc*. Connect *m_axis_tdata[15:0]* to *o_data_a[15:0]*, and *m_axis_tvalid* to *t_valid*:
+
+![](img_FIROutput.png)
+
+So, data going through *IN1* on the Red Pitaya will now be filitered, and the result sent through *OUT1*. What should we send through *OUT2*? Rather than just passing through the data from *IN2*,let's send the unfiltered data from *IN1* through *OUT2*, so we can compare the two on the oscilloscope. Connect *dac_in1* to *adc_out2*. This will give you the final block design:
+
+![](img_BlockDesign.png)
+
+
+
+
 
 ## What's next?
 
