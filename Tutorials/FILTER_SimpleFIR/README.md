@@ -117,6 +117,10 @@ The Vivado block that implements an FIR filter is called the *FIR Compiler*. Add
 * The red *ideal* line shows the response if the filter coefficients were implemented exactly. In reality however we must represent these decimals as a binary number string in FPGA, a process called *quantization*. The performance of the filter after quantization is shown by the blue *Quantized* curve.
 * The units of the vertical axis are in *Normalized Frequency*. On this, $1.0$ represents the Nyquist frequency $f_s/2=125\mathrm{MHz}/2=62.5\mathrm{MHz}$. The low-frequency cutoff here is $0.037$, which corresponds to $0.037\times62.5\mathrm{MHz}\approx 2.5\mathrm{MHz}$.
 
+#### Channel Specification
+
+![](img_FIRImplementation.png)
+
 #### Implementation
 
 Now click on the *Implementation* tab. Under *Coefficient Options* tick *Brest Precision Fraction Length*, which means Vivado will figure out how many bits to use to represent the FIR coefficients when doing its internal maths.
