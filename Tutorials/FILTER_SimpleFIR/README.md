@@ -69,6 +69,12 @@ In fact, we want the Fourier transform of our kernel to be the rect function, wh
 
 Choosing kernels can be a complicated affair. Depending on your requirements, you may care about how sharply the filter falls to zero, how flat it is, how many coefficients your FPGA hardware will let you have in your $h_j$, and many more things besides. For simple applications however you don't have to worry too much. There are many pre-made calculators both online and in programming languages like Python and MATLAB where you can just say that you want a low/high/band-pass filter and what the cut-offs should be, and they will give you a kernel $h_k$ that is good enough.
 
+### Filter complexity
+
+Suppose we build a block in Vivado to perform filtering operations. The Red Pitaya clock operates at 125MHz, which gives the speed at which the system can perform basic operations. Data coming in from the analog to digital converters is sampled at 125MHz. If we want to filter this data, it means that the filter only has one single clock cycle to implement all the filtering operations on each sample. This necessarily limits the complexity of the filter that can be applied. In practice we've found that for data sampled at 125MHz, the maximum number of coefficients a filter can have is a little over a hundred. This limits the sharpness of filter that can be achieved.
+
+Vivado's blocks can implement filters with up to a thousand coefficients, which can let you implement very sharp filters. However to do this we need to reduce the sampling rate of our data. If for example data is sampled at 1.25MHz, then the Red Pitaya has a hundred clock cycles to filter each data sample. However this comes with the tradeoff that you can only access and filter frequencies which are one-half of the reduced sampling frequency. We'll cover downsampling in [ADD THIS]().
+
 ### Truncating LSBs
 
 The filter works by adding together linear combinations of values of the input at different times. Depending on the filter coefficients you choose, it is possible for the output to thus be longer than a 16 bit number.
@@ -79,9 +85,9 @@ We only care about the lowest 14 bits. If the signal gets bigger the DAC will be
 
 ## Block design
 
-Begin by creating the block design from [splitting and joining AXIS data](/Tutorials/PROJ_IOSplittingJoining). Make sure you remember to *Generate Output Products* and *Create HDL Wrapper*.
+Begin by creating the block design from [splitting and joining AXIS data](/Tutorials/PROJ_IOSplittingJoining). Make sure you remember to *Generate Output Products* and *Create HDL Wrapper*. Then, disconnect the lines betwen *in1,in2* and *out1,out2*, and also the connections from *tvalid* to *out1_valid,out2_valid*. We will insert our filter between these.
 
-![The block design from the input signal feedthrough tutorial](img_FeedthroughSplitJoined.png)
+![The block design from the input signal feedthrough tutorial](img_BaseSplitDesign.png)
 
 ### Design an FIR Filter
 
@@ -110,7 +116,7 @@ Scrolling down, you'll under *Filter code* a list of numbers. These give you the
 
 #### Input coefficients
 
-The Vivado block that implements an FIR filter is called the *FIR Compiler*. Add one of these to the design. Double click to edit this. Paste the filter coefficients into the *Coefficient Vector* box. On the left, click on the *Freq. Response* tab, and it will visualise the gain of the filter.
+The Vivado block that implements an FIR filter is called the *FIR Compiler*. Add one of these to the design. Double click to edit this. Paste the filter coefficients into the *Coefficient Vector* box. On the left panel, click on the *Freq. Response* tab, and it will visualise the gain of the filter.
 
 ![](img_FIROptions.png)
 
@@ -119,7 +125,9 @@ The Vivado block that implements an FIR filter is called the *FIR Compiler*. Add
 
 #### Channel Specification
 
-![](img_FIRImplementation.png)
+Next go to the *Channel Specification* tab, and set the *Input Sampling Frequency* and *Clock Frequency* to 125MHz. As we mentioned earlier, this only gives the block a single clock cycle to implement the filter on each sample point, which limits the number of filter coefficients. If you've put too many coefficients for the FPGA to handle, you will get an error upon setting these values.
+
+![](img_FIRChannelSpecification.png)
 
 #### Implementation
 
@@ -159,10 +167,12 @@ So, data going through *IN1* on the Red Pitaya will now be filitered, and the re
 
 
 
-
+If you try it out, the output will be two less than the input, even in the passband. As mentioned earlier, this is because we are truncating the LSBs. 
 
 ## What's next?
 
-- A good reference on digital filtering is [Understanding Digital Signal Processing by Richard Lyons](https://www.amazon.com/Understanding-Digital-Signal-Processing-3rd/dp/0137027419).
-- In this tutorial we made a low-pass filter. Try and make a high-pass or bandpass.
-- In this tutorial we used FIR filters.  More advanced filters (*Infinite Input Response*) use feedback to achieve better performance. In certain circumstances this feedback can lead to the output continuing for ever after the input signal stops. 
+- In this tutorial we made a low-pass filter. Try and make a high-pass or bandpass. Remember that the number of filter coefficients should be around a hundred and fifty, or you will get an error.
+- The output from our FIR filter was reduced by two. You can try and correct this by adding another block, or custom Verilog code, which multiplies the output by two. However if the FIR output ever rises too high, the result will be gibberish. 
+  - You could try and write some Verilog code which takes the FIR output, multiplies by two if the result is not too large, and handles it appropriately otherwise, such as by capping the voltage.
+- To make filters which use more coefficients, or work at lower frequencies, it will be necessary to downsample the signal. To go down that route check out our [ADD THIS]().
+- If you want to read more on digital filtering, a good reference is [Understanding Digital Signal Processing by Richard Lyons](https://www.amazon.com/Understanding-Digital-Signal-Processing-3rd/dp/0137027419).

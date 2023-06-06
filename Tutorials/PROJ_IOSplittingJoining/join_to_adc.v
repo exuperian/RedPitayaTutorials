@@ -1,4 +1,4 @@
-//Ruvi Lecamwasam, May 2023
+//Ruvi Lecamwasam, June 2023
 //Joins two 16 bit signals into a 32 bit signal 
 //which can be given to Pavel Denim's AXIS ADC core.
 //
@@ -16,10 +16,11 @@ module join_to_adc #
   (* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)
   input wire                        aclk,
   (* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)  
-  input wire [PADDED_DATA_WIDTH-1:0] out_1,
+  input wire [PADDED_DATA_WIDTH-1:0] out1,
   (* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)
-  input wire [PADDED_DATA_WIDTH-1:0] out_2,
-  input wire t_valid,
+  input wire [PADDED_DATA_WIDTH-1:0] out2,
+  input wire out1_valid,
+  input wire out2_valid,
   
   //Joined data output
   (* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)  
@@ -27,17 +28,22 @@ module join_to_adc #
   output wire m_axis_tvalid
 );
 
-    reg  [AXIS_TDATA_WIDTH-1:0] int_tdata_reg;
+    reg  [PADDED_DATA_WIDTH-1:0] out1_reg;
+    reg  [PADDED_DATA_WIDTH-1:0] out2_reg;
     
     always @(posedge aclk)
     begin
-        if(t_valid)
+        if(out1_valid)
         begin
-            int_tdata_reg <= {out_2[PADDED_DATA_WIDTH-1:0],out_1[PADDED_DATA_WIDTH-1:0]};
+            out1_reg <= out1[PADDED_DATA_WIDTH-1:0];
+        end
+        if(out2_valid)
+        begin
+            out2_reg <= out2[PADDED_DATA_WIDTH-1:0];
         end
     end
 
-  assign m_axis_tdata = int_tdata_reg;
-  assign m_axis_tvalid = t_valid;
+  assign m_axis_tdata = {out2_reg[PADDED_DATA_WIDTH-1:0],out1_reg[PADDED_DATA_WIDTH-1:0]};
+  assign m_axis_tvalid = 1'b1;
 
 endmodule

@@ -28,7 +28,7 @@ This block joins two streams into one
 
 ## Block design
 
-Begin by creating the block design from [input signal feedthrough](/Tutorials/PROJ_IOFeedthrough). Make sure you remember to *Generate Output Products* and *Create HDL Wrapper*, and also set the wrapper for your main design as top.
+Begin by creating the block design from [input signal feedthrough](/Tutorials/PROJ_IOFeedthrough). Make sure you remember to *Generate Output Products* and *Create HDL Wrapper*, and also set the wrapper for your main design as top. However, **remove** the data connection between *m_axis* on the ADC and *s_axis* on the DAC. We'll be placing something between these.
 
 
 
@@ -36,30 +36,33 @@ Begin by creating the block design from [input signal feedthrough](/Tutorials/PR
 
 ### Add sources
 
-On the left sidebar under *Project Manager* select *Add Sources*. Choose the *Add or create design sources* radio button and press *Next*. Then use the *Add Files* button to add  `join_to_adc.v` and `split_from_dac.v`. 
+On the left sidebar under *Project Manager* select *Add Sources*. Choose the *Add or create design sources* radio button and press *Next*. Then use the *Add Files* button to add  `join_to_adc.v` and `split_from_dac.v`.  
 
 ### Connect split_from_dac
 
-Add *split_from_dac* to the block design. Connect its *m_axis* and *adc_clk* to the corresponding  
+Add *split_from_dac* to the block design. Connect its *s_axis* to the *m_axis* port on the ADC, and its clock signal *aclk* to *adc_clk*.
 
 ![](img_split_connections.png)
 
 ### Connect join_to_adc
 
-Now add *join_to_adc* to the design. Connect it to *split_from_dac* as below
+Now add *join_to_adc* to the design. Connect *out1* and *out2* to *in1* and *in2*. Connect *t_valid* to *out1_valid* and *out2_valid*, and connect *aclk* to the *adc_clk* on the ADC.
 
 ![](img_join_split_connections.png)
 
 
 
-Then drag the *m_axis* port on *join_to_adc* to the *s_axis* port on *axis_red_pitaya_dac*.
+Then connect the *m_axis* port on *join_to_adc* to the *s_axis* port on *axis_red_pitaya_dac*.
 
 
 
 The completed design should then look like:![](img_FeedthroughSplitJoined.png)
 
-Since we are just splitting and then recombining the input, this should behave just like a passthrough. Compile it and make sure it works! The fun will happen when we start filtering one of the channels.
+Since we are just splitting and then recombining the input, this should just pass input straight through to the output. Compile it and make sure it works! 
 
 ## What's next?
 
-- 
+- At the moment this circuit just passes input data straight through to the input. But now that we've split the input and output channels, we can start 
+- For the STEMLAB-14, the data from the ADCs is 14 bit. However these are sign-padded to 16 bits, and we keep the padding bits when we split and join the data. There are two reasons for this. 
+  - Firstly many Vivado blocks work with a whole number of bytes by default (for example the [DDS Compiler](/Tutorials/PROJ_IOSignalGeneration)), so we have to work with sixteen bits anyway.
+  - Secondly Red Pitaya [also has a model](https://redpitaya.com/product/sdrlab-122-16-standard-kit/) with 16 bits on the ADC (though still only 14 bits on the DAC). Including the extra bits on our splitting and joining code will reduce friction if you also want to run this code on the 16 bit model.
