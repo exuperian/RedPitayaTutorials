@@ -12,47 +12,67 @@ The first core splits
 
 ### Code
 
-The code is
+The code has two parameters
 
 ```verilog
-`timescale 1 ns / 1 ps
-
 module split_from_dac #
 (
   parameter integer PADDED_DATA_WIDTH = 16,
   parameter integer AXIS_TDATA_WIDTH = 32
 )
-(
-  // Inputs from ADC
-  (* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)
-  input wire                        adc_clk,
-  (* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)
-  input wire [AXIS_TDATA_WIDTH-1:0] m_axis_tdata,
-  input wire                        m_axis_tvalid,
-  
-  //Split data output
-  (* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)  
-  output wire [PADDED_DATA_WIDTH-1:0] o_data_a,
-  (* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)
-  output wire [PADDED_DATA_WIDTH-1:0] o_data_b
-);
+```
 
-  reg  [PADDED_DATA_WIDTH-1:0] int_data_a_reg;
-  reg  [PADDED_DATA_WIDTH-1:0] int_data_b_reg;
+Inputs
 
-  always @(posedge adc_clk)
-  begin
-    if(m_axis_tvalid)
-    begin
-        int_data_a_reg <= m_axis_tdata[15:0];
-        int_data_b_reg <= m_axis_tdata[31:16];
-    end
-  end
+```verilog
+(* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)
+input wire	aclk,
 
-  assign o_data_a = int_data_a_reg;
-  assign o_data_b = int_data_b_reg;
+(* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)
+input wire [AXIS_TDATA_WIDTH-1:0] s_axis_tdata,
 
-endmodule
+input wire	s_axis_tvalid,
+```
+
+Outputs
+
+```verilog
+(* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)  
+output wire [PADDED_DATA_WIDTH-1:0] in1,
+
+(* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)
+output wire [PADDED_DATA_WIDTH-1:0] in2,
+
+output wire t_valid
+```
+
+Registers
+
+```verilog
+reg  [PADDED_DATA_WIDTH-1:0] in1_reg;
+reg  [PADDED_DATA_WIDTH-1:0] in2_reg;
+```
+
+Update
+
+```verilog
+always @(posedge aclk)
+begin
+	if(s_axis_tvalid)
+	begin
+    	in1_reg <= s_axis_tdata[15:0];
+    	in2_reg <= s_axis_tdata[31:16];
+	end
+end
+```
+
+Output
+
+```verilog
+assign in1 = in1_reg;
+assign in2 = in2_reg;
+
+assign t_valid  = s_axis_tvalid;
 ```
 
 ## join_to_adc
@@ -63,44 +83,68 @@ endmodule
 
 ### Code
 
-```verilog
-`timescale 1 ns / 1 ps
+Parameters
 
+```verilog
 module join_to_adc #
 (
   parameter integer PADDED_DATA_WIDTH = 16,
   parameter integer AXIS_TDATA_WIDTH = 32
 )
-(
-  //Split data input
-  (* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)
-  input wire                        adc_clk,
-  (* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)  
-  input wire [PADDED_DATA_WIDTH-1:0] o_data_a,
-  (* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)
-  input wire [PADDED_DATA_WIDTH-1:0] o_data_b,
-  input wire t_valid,
-
-  //Joined data output
-  (* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)  
-  output wire [AXIS_TDATA_WIDTH-1:0] m_axis_tdata,
-  output wire m_axis_tvalid
-);
-
-    reg  [AXIS_TDATA_WIDTH-1:0] int_tdata_reg;
-    
-    always @(posedge adc_clk)
-    begin
-        if(t_valid)
-        begin
-            int_tdata_reg <= {o_data_b[PADDED_DATA_WIDTH-1:0],o_data_a[PADDED_DATA_WIDTH-1:0]};
-        end
-    end
-
-  assign m_axis_tdata = int_tdata_reg;
-  assign m_axis_tvalid = t_valid;
-
-endmodule
 ```
 
+Inputs
+
+```verilog
+(* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)
+input wire                        aclk,
+
+(* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)  
+input wire [PADDED_DATA_WIDTH-1:0] out1,
+(* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)
+input wire [PADDED_DATA_WIDTH-1:0] out2,
+
+input wire out1_valid,
+input wire out2_valid,
+```
+
+Outputs
+
+```verilog
+//Joined output data
+(* X_INTERFACE_PARAMETER = "FREQ_HZ 125000000" *)  
+output wire [AXIS_TDATA_WIDTH-1:0] m_axis_tdata,
+output wire m_axis_tvalid
+```
+
+Registers
+
+```verilog
+reg  [PADDED_DATA_WIDTH-1:0] out1_reg;
+reg  [PADDED_DATA_WIDTH-1:0] out2_reg;
+```
+
+Update
+
+```verilog
+always @(posedge aclk)
+begin
+    if(out1_valid)
+    begin
+        out1_reg <= out1[PADDED_DATA_WIDTH-1:0];
+    end
+    if(out2_valid)
+    begin
+        out2_reg <= out2[PADDED_DATA_WIDTH-1:0];
+    end
+end
+```
+
+Output
+
+```verilog
+assign m_axis_tdata = {out2_reg[PADDED_DATA_WIDTH-1:0],out1_reg[PADDED_DATA_WIDTH-1:0]};
+assign m_axis_tvalid = 1'b1;
+
+```
 
