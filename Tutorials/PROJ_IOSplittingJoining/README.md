@@ -2,7 +2,7 @@
 
 In the  [input signal feedthrough](/Tutorials/PROJ_IOFeedthrough) tutorial, we've seen how to take data from the Red Pitaya's analogue inputs, and then feed this to the outputs. The data is contained in a 32 bit AXI Stream which combines the the two signals. To do signal processing or feedback, we need to be able to manipulate the input signals individually. In this tutorial we'll introduce two Verilog blocks, one which splits the 32 bit stream from the ADC into the two 16 bit signals, and another which recombines them into a 32 bit signal to feed to the DAC.
 
-The modules are described by two files `join_to_adc.v` and `split_from_dac.v` which you can download from this folder. If you want the details on how they work [see here](/Tutorials/CORE_SPLIT_JOIN), but you don't need to know this.
+The modules are described by two files `join_to_dac.v` and `split_from_adc.v` which you can download from this folder. If you want the details on how they work [see here](/Tutorials/CORE_SPLIT_JOIN), but you don't need to know this.
 
 For the STEMLAB-14, the data coming from the ADCs is 14 bit. So why do the splitting and joining blocks work with 16 bits? There are two reasons for this. 
 
@@ -16,7 +16,7 @@ Let's first introduce the two blocks.
 
 ### split_from_dac.v
 
-This block splits the 32 bit signal from the DAC into two 16 bit streams.
+This block splits the 32 bit signal from the ADC into two 16 bit streams.
 
 
 
@@ -25,14 +25,14 @@ This block splits the 32 bit signal from the DAC into two 16 bit streams.
 This has two inputs:
 
 * As *s_axis* AXI stream, made up of a 32 bit data line *s_axis_tdata*, and a *s_axis_tvalid* signal saying when the incoming data is valid. It is the *s_axis_tdata* signal that contains our combined input data.
-* A clock signal *aclk*, short for 'AXI Clock'. This will be the 125MHz signal from the DAC.
+* A clock signal *aclk*, short for 'AXI Clock'. This will be the 125MHz signal from the ADC.
 
 There are three outputs:
 
 *  *in1* and *in2* are 16 bit signals containing the two inputs. Recall that the STEMLab-14 has 14 bit ADCs, so the upper two bits on these will be padding.
 * *t_valid* just feeds through *s_axis_tvalid*.
 
-### join_to_adc.v
+### join_to_dac.v
 
 This block joins two data signals into a single AXI stream to give to the DAC.
 
@@ -62,7 +62,7 @@ On the left sidebar under *Project Manager* select *Add Sources*. Choose the *Ad
 
 ### Connect split_from_dac
 
-Drag and drop *split_from_dac* into the block design. Connect its *s_axis* to the *m_axis* port on the ADC, and its clock signal *aclk* to *adc_clk*.
+Drag and drop *split_from_adc* into the block design. Connect its *s_axis* to the *m_axis* port on the ADC, and its clock signal *aclk* to *adc_clk*.
 
 ![](img_split_connections.png)
 
@@ -70,13 +70,13 @@ The ports *in1* and *in2* carry the signals for the two inputs on the Red Pitya.
 
 ### Connect join_to_adc
 
-Drag *join_to_adc* into the design. Connect its *out1* and *out2* ports to *in1* and *in2* on the splitting block. Connect *t_valid* to both *out1_valid* and *out2_valid*, and connect *aclk* to the *adc_clk* on the ADC.
+Drag *join_to_dac* into the design. Connect its *out1* and *out2* ports to *in1* and *in2* on the splitting block. Connect *t_valid* to both *out1_valid* and *out2_valid*, and connect *aclk* to the *adc_clk* on the ADC.
 
 ![](img_join_split_connections.png)
 
 
 
-Finally, connect the *m_axis* port on *join_to_adc* to the *s_axis* port on *axis_red_pitaya_dac*, giving you the final design:![](img_FeedthroughSplitJoined.png)
+Finally, connect the *m_axis* port on *join_to_dac* to the *s_axis* port on *axis_red_pitaya_dac*, giving you the final design:![](img_FeedthroughSplitJoined.png)
 
 This design should just pass input straight through to the outputs. Compile it and check if it works! 
 

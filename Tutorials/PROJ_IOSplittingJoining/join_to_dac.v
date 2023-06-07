@@ -1,12 +1,12 @@
 //Ruvi Lecamwasam, June 2023
 //Joins two 16 bit signals into a 32 bit signal 
-//which can be given to Pavel Denim's AXIS ADC core.
+//which can be given to Pavel Denim's AXIS DAC core.
 //
 //See github.com/exuperian/RedPitayaTutorials
 
 `timescale 1 ns / 1 ps
 
-module join_to_adc #
+module join_to_dac #
 (
   parameter integer PADDED_DATA_WIDTH = 16,
   parameter integer AXIS_TDATA_WIDTH = 32

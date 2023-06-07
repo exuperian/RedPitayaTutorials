@@ -42,7 +42,7 @@ Learn how to use the fast analog input and output ports. You'll need an oscillos
 
 ### Digital filtering
 
-The Red Pitaya can be used as a programmable digital filter for frequencies at megahertz and below. You'll need to oscilloscope and signal generator to test these out, and to have gone through the *Input and output* section.
+The Red Pitaya can be used as a programmable digital filter for frequencies at megahertz and below. You'll need to go through the *Input and output* section first, and have an oscilloscope and signal generator to test these out.
 
 * [Simple FIR filter](/Tutorials/FILTER_SimpleFIR)
 * Reducing the sample rate - decimation
@@ -54,7 +54,7 @@ The Red Pitaya can be used as a programmable digital filter for frequencies at m
 
 * [Negative numbers in binary](/Tutorials/FPGA_NegativeBinary)
 
-### Cores
+### Verilog code blocks 
 
 * [DAC AXIS Stream](/Tutorials/CORE_DAC_AXIS)
 * [ADC AXIS Stream](/Tutorials/CORE_ADC_AXIS)
