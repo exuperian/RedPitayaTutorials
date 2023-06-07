@@ -6,7 +6,7 @@ The modules are described by two files `join_to_adc.v` and `split_from_dac.v` wh
 
 For the STEMLAB-14, the data coming from the ADCs is 14 bit. So why do the splitting and joining blocks work with 16 bits? There are two reasons for this. 
 
-* Many Vivado blocks work with a whole number of bytes (for example the [DDS Compiler](/Tutorials/PROJ_IOSignalGeneration)), so we have to work with sixteen bits anyway, and just keep in mind that the top two bits are just [sign padding](/Tutorials/FPGA_NegativeBinary).
+* Many Vivado blocks work with a whole number of bytes (for example the [DDS Compiler](/Tutorials/PROJ_IOSignalGeneration)), so we have to [sign extend](/Tutorials/FPGA_NegativeBinary) to 16 bits.
 
 - Red Pitaya [also has a model](https://redpitaya.com/product/sdrlab-122-16-standard-kit/) with 16 bits on the ADC (though still only 14 bits on the DAC). Including the extra bits on our splitting and joining code mans you won't have to re-write them if you also want to run this code on the 16 bit model.
 
