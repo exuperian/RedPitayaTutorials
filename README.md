@@ -12,6 +12,6 @@ If you have any comments or suggestions, you can reach us at:
 
 [alexander.hodges@oist.jp](mailto:alexander.hodges@oist.jp)
 
-[ruvindha.lecamwasam@oist.jp](mailto:ruvindha.lecamwasam@oist.jp)
+[me@ruvi.blog](mailto:me@ruvi.blog)
 
 *It is possible, though highly unlikely, for improperly-written FPGA code to [permanently damage your device](https://electronics.stackexchange.com/q/293915/314171). We have tried our best to make sure everything is correct, but we don't take responsibility for any damage that may occur.*
