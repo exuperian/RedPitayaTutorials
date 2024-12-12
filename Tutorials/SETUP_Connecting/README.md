@@ -19,7 +19,7 @@ In addition to the Red Pitaya, you also need the
 
 ## Plugging things in
 
-You first need to insert the microSD card containing the operating system. Before this however, **we recommend updating the operating system to the latest version**, see [the official instructions on how to do this](https://redpitaya.readthedocs.io/en/latest/quickStart/SDcard/SDcard.html#). Old versions of the software can sometimes have trouble connecting to the network. Once you've updated your microSD card, insert it as below. It should make a satisfying click.
+You first need to insert the microSD card containing the operating system. Before this  , **we recommend updating the operating system to version 1.04**, see [the official instructions on how to do this](https://redpitaya.readthedocs.io/en/latest/quickStart/SDcard/SDcard.html#). Old versions of the software can sometimes have trouble connecting to the network. **And the recently released version 2 is not compatible with these tutorials, for reasons we haven't had the time to look into yet.** Once you've updated your microSD card, insert it as below. It should make a satisfying click.
 
 ![The microSD card being inserted into the slot, which is directly above the micro USB ports.](img_InsertingSD.jpg)
 
@@ -55,7 +55,7 @@ You're now connected! You can click on these buttons to use the various tools th
 
 Hopefully you can now access your Red Pitaya, and control it via the web browser. If you do have issues check out the [official documentation on getting started](https://redpitaya.readthedocs.io/en/latest/quickStart/quickStart.html). The two main things to look out for are 
 
-* updating the SD card beforehand, and 
+* updating the SD card beforehand to **version 1.04**, and 
 * changing the network settings if you are using Linux.
 
 Now check out some of the other [Tutorials](/Tutorials/HOME_Tutorials/)!
