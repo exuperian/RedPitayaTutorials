@@ -6,6 +6,8 @@ The *Red Pitaya* is a very powerful and versatile device. It combines both a CPU
 
 Check out our [Tutorials](/Tutorials/HOME_Tutorials/), or links for [Further reading](/References).
 
+**Tutorials on digital filtering will be up some time in January 2025**
+
 All designs have been tested on the [STEMLab-14](https://redpitaya.com/stemlab-125-14). The code should still work on other models, in some cases with minor modifications that we'll try our best to mention. Note that Vivado, the tool we use to program the FPGA, only supports Windows and Linux. There are some articles online about running Vivado on a Mac using a virtual machine, but we haven't tested this.
 
 If you have any comments or suggestions, you can reach us at:
