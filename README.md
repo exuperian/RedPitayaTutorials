@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/85d31be4-0249-4187-a427-267172367b59)# Red Pitaya Tutorials
+# Red Pitaya Tutorials
 
 Alex Hodges & Ruvi Lecamwasam
 
